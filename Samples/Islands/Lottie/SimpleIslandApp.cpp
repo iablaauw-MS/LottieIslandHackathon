@@ -9,6 +9,8 @@
 #include <App.xaml.h>
 #include <MainPage.h>
 #include <Microsoft.UI.Dispatching.Interop.h> // For ContentPreTranslateMessage
+#include <winrt/LottieIsland.h>
+#include <activation.h>
 
 namespace winrt
 {
@@ -25,6 +27,7 @@ HWND                InitInstance(HINSTANCE, int, const wchar_t* szTitle, const w
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 bool                ProcessMessageForTabNavigation(const HWND topLevelWindow, MSG* msg);
+winrt::LottieIsland::LottieContentIsland CreateLottieIsland();
 
 // Extra state for our top-level window, we point to from GWLP_USERDATA.
 struct WindowInfo
@@ -32,6 +35,7 @@ struct WindowInfo
     winrt::DesktopWindowXamlSource DesktopWindowXamlSource{ nullptr };
     winrt::event_token TakeFocusRequestedToken{};
     HWND LastFocusedWindow{ NULL };
+    winrt::LottieIsland::LottieContentIsland LottieIsland{ };
 };
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -53,6 +57,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
         // in Microsoft.ui.xaml.controls.dll.
         auto simpleIslandApp{ winrt::make<winrt::SimpleIslandApp::implementation::App>() };
+
+        auto module = LoadLibrary(L"LottieIsland.dll");
+        if (module == NULL) { winrt::throw_last_error(); }
 
         // The title bar text
         WCHAR szTitle[100];
@@ -292,6 +299,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
+            int wmCode = HIWORD(wParam);
             // Parse the menu selections:
             switch (wmId)
             {
@@ -300,6 +308,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
+                break;
+            case 501: // Button 1
+                if (wmCode == BN_CLICKED)
+                {
+                    auto prop = windowInfo->LottieIsland.MyProperty();
+                    --prop;
+                    windowInfo->LottieIsland.MyProperty(prop);
+                    OutputDebugString(L"Property: ");
+                    OutputDebugString(std::to_wstring(prop).c_str());
+                    OutputDebugString(L"\n");
+                }
+                break;
+            case 502: // Button 2
+                if (wmCode == BN_CLICKED)
+                {
+                    auto prop = windowInfo->LottieIsland.MyProperty();
+                    ++prop;
+                    windowInfo->LottieIsland.MyProperty(prop);
+                    OutputDebugString(L"Property: ");
+                    OutputDebugString(std::to_wstring(prop).c_str());
+                    OutputDebugString(L"\n");
+                }
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
@@ -351,4 +381,18 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+IActivationFactory* GetLottieIslandActivationFactory()
+{
+    auto typeName = winrt::name_of<winrt::LottieIsland::LottieContentIsland>();
+    return nullptr;
+}
+
+winrt::LottieIsland::LottieContentIsland CreateLottieIsland()
+{
+    static IActivationFactory* s_activationFactory = GetLottieIslandActivationFactory();
+
+
+    return nullptr;
 }

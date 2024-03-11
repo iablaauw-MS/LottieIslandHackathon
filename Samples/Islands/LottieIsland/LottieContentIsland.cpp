@@ -6,11 +6,11 @@ namespace winrt::LottieIsland::implementation
 {
     int32_t LottieContentIsland::MyProperty()
     {
-        throw hresult_not_implemented();
+        return m_myProperty;
     }
 
-    void LottieContentIsland::MyProperty(int32_t /* value */)
+    void LottieContentIsland::MyProperty(int32_t value)
     {
-        throw hresult_not_implemented();
+        m_myProperty = value;
     }
 }

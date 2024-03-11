@@ -10,6 +10,9 @@ namespace winrt::LottieIsland::implementation
 
         int32_t MyProperty();
         void MyProperty(int32_t value);
+
+    private:
+        int32_t m_myProperty = 42;
     };
 }
 
