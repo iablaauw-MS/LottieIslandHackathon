@@ -22,5 +22,6 @@ namespace winrt::SimpleIslandApp::implementation
     void MainPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
     {
         Button().Content(box_value(L"Clicked"));
+        LottieVisualWinRT::Class1::SayHello();
     }
 }

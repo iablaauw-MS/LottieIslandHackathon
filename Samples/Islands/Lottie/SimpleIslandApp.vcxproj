@@ -278,7 +278,15 @@
     <ProjectReference Include="..\LottieIsland\LottieIsland.vcxproj">
       <Project>{9ba7a2f2-b723-458b-a575-3f726d271465}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\LottieVisualWinRT\LottieVisualWinRT.csproj">
+      <Project>{7cf889af-6b9b-4f9c-815c-990f5f73c9a0}</Project>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="package.appxmanifest">
+    <SubType>Designer</SubType>
+    </AppxManifest>
+</ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\Microsoft.Windows.SDK.BuildTools.10.0.22621.1\build\Microsoft.Windows.SDK.BuildTools.targets" Condition="Exists('packages\Microsoft.Windows.SDK.BuildTools.10.0.22621.1\build\Microsoft.Windows.SDK.BuildTools.targets')" />
