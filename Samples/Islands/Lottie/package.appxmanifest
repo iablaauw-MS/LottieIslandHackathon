@@ -1,0 +1,9 @@
+<!--In order to host the C# component from C++, you must add the following Extension group and list the activatable classes-->
+<Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+        <InProcessServer>
+            <Path>LottieVisualWinRT.dll</Path>
+            <ActivatableClass ActivatableClassId="LottieVisualWinRT.Class1" ThreadingModel="both" />
+        </InProcessServer>
+    </Extension>
+</Extensions>
