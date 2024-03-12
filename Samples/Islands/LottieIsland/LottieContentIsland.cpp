@@ -4,6 +4,16 @@
 
 namespace winrt::LottieIsland::implementation
 {
+    LottieContentIsland::LottieContentIsland(
+        const winrt::Compositor& compositor)
+        : m_compositor(compositor)
+    {
+        m_rootVisual = m_compositor.CreateContainerVisual();
+        m_island = winrt::ContentIsland::Create(m_rootVisual);
+
+        // TODO: set up a red tree
+    }
+
     int32_t LottieContentIsland::MyProperty()
     {
         return m_myProperty;

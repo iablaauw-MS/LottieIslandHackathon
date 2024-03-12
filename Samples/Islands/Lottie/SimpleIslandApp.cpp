@@ -14,6 +14,7 @@
 namespace winrt
 {
     using namespace winrt::Microsoft::UI;
+    using namespace winrt::Microsoft::UI::Content;
     using namespace winrt::Microsoft::UI::Dispatching;
     using namespace winrt::Microsoft::UI::Xaml;
     using namespace winrt::Microsoft::UI::Xaml::Hosting;
@@ -30,10 +31,12 @@ bool                ProcessMessageForTabNavigation(const HWND topLevelWindow, MS
 // Extra state for our top-level window, we point to from GWLP_USERDATA.
 struct WindowInfo
 {
-    winrt::DesktopWindowXamlSource DesktopWindowXamlSource{ nullptr };
+    // winrt::DesktopWindowXamlSource DesktopWindowXamlSource{ nullptr };
+    winrt::Microsoft::UI::Composition::Compositor Compositor{};
+    winrt::DesktopChildSiteBridge Bridge{ nullptr };
     winrt::event_token TakeFocusRequestedToken{};
     HWND LastFocusedWindow{ NULL };
-    winrt::LottieIsland::LottieContentIsland LottieIsland{ };
+    winrt::LottieIsland::LottieContentIsland LottieIsland{ nullptr };
 };
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -54,7 +57,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
         // in Microsoft.ui.xaml.controls.dll.
-        auto simpleIslandApp{ winrt::make<winrt::SimpleIslandApp::implementation::App>() };
+        // auto simpleIslandApp{ winrt::make<winrt::SimpleIslandApp::implementation::App>() };
 
         // The title bar text
         WCHAR szTitle[100];
@@ -113,46 +116,46 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 // Returns "true" if the function handled the message and it shouldn't be processed any further.
 // Intended to be called from the main message loop.
-bool ProcessMessageForTabNavigation(const HWND topLevelWindow, MSG* msg)
+bool ProcessMessageForTabNavigation(const HWND /*topLevelWindow*/, MSG* /*msg*/)
 {
-    if (msg->message == WM_KEYDOWN && msg->wParam == VK_TAB)
-    {
-        // The user is pressing the "tab" key.  We want to handle this ourselves so we can pass information into Xaml
-        // about the tab navigation.  Specifically, we need to tell Xaml whether this is a forward tab, or a backward
-        // shift+tab, so Xaml will know whether to put focus on the first Xaml element in the island or the last
-        // Xaml element.  (This is done in the call to DesktopWindowXamlSource.NavigateFocus()).
-        const HWND currentFocusedWindow = ::GetFocus();
-        if (::GetAncestor(currentFocusedWindow, GA_ROOT) != topLevelWindow)
-        {
-            // This is a window outside of our top-level window, let the system process it.
-            return false;
-        }
+    //if (msg->message == WM_KEYDOWN && msg->wParam == VK_TAB)
+    //{
+    //    // The user is pressing the "tab" key.  We want to handle this ourselves so we can pass information into Xaml
+    //    // about the tab navigation.  Specifically, we need to tell Xaml whether this is a forward tab, or a backward
+    //    // shift+tab, so Xaml will know whether to put focus on the first Xaml element in the island or the last
+    //    // Xaml element.  (This is done in the call to DesktopWindowXamlSource.NavigateFocus()).
+    //    const HWND currentFocusedWindow = ::GetFocus();
+    //    if (::GetAncestor(currentFocusedWindow, GA_ROOT) != topLevelWindow)
+    //    {
+    //        // This is a window outside of our top-level window, let the system process it.
+    //        return false;
+    //    }
 
-        const bool isShiftKeyDown = ((HIWORD(::GetKeyState(VK_SHIFT)) & 0x8000) != 0);
-        const HWND nextFocusedWindow = ::GetNextDlgTabItem(topLevelWindow, currentFocusedWindow, isShiftKeyDown /*bPrevious*/);
+    //    const bool isShiftKeyDown = ((HIWORD(::GetKeyState(VK_SHIFT)) & 0x8000) != 0);
+    //    const HWND nextFocusedWindow = ::GetNextDlgTabItem(topLevelWindow, currentFocusedWindow, isShiftKeyDown /*bPrevious*/);
 
-        WindowInfo* windowInfo = reinterpret_cast<WindowInfo*>(::GetWindowLongPtr(topLevelWindow, GWLP_USERDATA));
-        const HWND dwxsWindow = winrt::GetWindowFromWindowId(windowInfo->DesktopWindowXamlSource.SiteBridge().WindowId());
-        if (dwxsWindow == nextFocusedWindow)
-        {
-            // Focus is moving to our DesktopWindowXamlSource.  Instead of just calling SetFocus on it, we call NavigateFocus(),
-            // which allows us to tell Xaml which direction the keyboard focus is moving.
-            // If your app has multiple DesktopWindowXamlSources in the window, you'll want to loop over them and check to
-            // see if focus is moving to each one.
-            winrt::XamlSourceFocusNavigationRequest request{
-                isShiftKeyDown ?
-                    winrt::XamlSourceFocusNavigationReason::Last :
-                    winrt::XamlSourceFocusNavigationReason::First };
+    //    WindowInfo* windowInfo = reinterpret_cast<WindowInfo*>(::GetWindowLongPtr(topLevelWindow, GWLP_USERDATA));
+    //    const HWND dwxsWindow = winrt::GetWindowFromWindowId(windowInfo->DesktopWindowXamlSource.SiteBridge().WindowId());
+    //    if (dwxsWindow == nextFocusedWindow)
+    //    {
+    //        // Focus is moving to our DesktopWindowXamlSource.  Instead of just calling SetFocus on it, we call NavigateFocus(),
+    //        // which allows us to tell Xaml which direction the keyboard focus is moving.
+    //        // If your app has multiple DesktopWindowXamlSources in the window, you'll want to loop over them and check to
+    //        // see if focus is moving to each one.
+    //        winrt::XamlSourceFocusNavigationRequest request{
+    //            isShiftKeyDown ?
+    //                winrt::XamlSourceFocusNavigationReason::Last :
+    //                winrt::XamlSourceFocusNavigationReason::First };
 
-            windowInfo->DesktopWindowXamlSource.NavigateFocus(request);
-            return true;
-        }
+    //        windowInfo->DesktopWindowXamlSource.NavigateFocus(request);
+    //        return true;
+    //    }
 
-        // Focus isn't moving to our DesktopWindowXamlSource.  IsDialogMessage will automatically do the tab navigation
-        // for us for this msg.
-        const bool handled = (::IsDialogMessage(topLevelWindow, msg) == TRUE);
-        return handled;
-    }
+    //    // Focus isn't moving to our DesktopWindowXamlSource.  IsDialogMessage will automatically do the tab navigation
+    //    // for us for this msg.
+    //    const bool handled = (::IsDialogMessage(topLevelWindow, msg) == TRUE);
+    //    return handled;
+    //}
     return false;
 }
 
@@ -227,51 +230,55 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             const HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
             ::CreateWindow(L"BUTTON", L"Win32 Button 1", WS_TABSTOP | WS_VISIBLE | WS_CHILD, 10, 10, 150, 40, hWnd, (HMENU)501, hInst, NULL);
 
-            // Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
-            windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};
-            windowInfo->DesktopWindowXamlSource.Initialize(winrt::GetWindowIdFromWindow(hWnd));
+            windowInfo->Bridge = winrt::DesktopChildSiteBridge::Create(
+                windowInfo->Compositor,
+                winrt::GetWindowIdFromWindow(hWnd));
 
-            // Enable the DesktopWindowXamlSource to be a tab stop.
-            ::SetWindowLong(
-                winrt::GetWindowFromWindowId(windowInfo->DesktopWindowXamlSource.SiteBridge().WindowId()),
-                GWL_STYLE,
-                WS_TABSTOP | WS_CHILD | WS_VISIBLE);
+            //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
+            //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};
+            //windowInfo->DesktopWindowXamlSource.Initialize(winrt::GetWindowIdFromWindow(hWnd));
 
-            // Put a new instance of our Xaml "MainPage" into our island.  This is our UI content.
-            windowInfo->DesktopWindowXamlSource.Content(winrt::make<winrt::SimpleIslandApp::implementation::MainPage>());
+            //// Enable the DesktopWindowXamlSource to be a tab stop.
+            //::SetWindowLong(
+            //    winrt::GetWindowFromWindowId(windowInfo->DesktopWindowXamlSource.SiteBridge().WindowId()),
+            //    GWL_STYLE,
+            //    WS_TABSTOP | WS_CHILD | WS_VISIBLE);
+
+            //// Put a new instance of our Xaml "MainPage" into our island.  This is our UI content.
+            //windowInfo->DesktopWindowXamlSource.Content(winrt::make<winrt::SimpleIslandApp::implementation::MainPage>());
 
             ::CreateWindow(L"BUTTON", L"Win32 Button 2", WS_TABSTOP | WS_VISIBLE | WS_CHILD, 10, 400, 150, 40, hWnd, (HMENU)502, hInst, NULL);
 
             // Subscribe to the TakeFocusRequested event, which will be raised when Xaml wants to move keyboard focus back to our window.
-            windowInfo->TakeFocusRequestedToken = windowInfo->DesktopWindowXamlSource.TakeFocusRequested(
-                [hWnd](winrt::DesktopWindowXamlSource const& /*sender*/, winrt::DesktopWindowXamlSourceTakeFocusRequestedEventArgs const& args) {
-                    if (args.Request().Reason() == winrt::XamlSourceFocusNavigationReason::First)
-                    {
-                        // The reason "First" means the user is tabbing forward, so put the focus on the button in the tab order
-                        // after the DesktopWindowXamlSource.
-                        ::SetFocus(::GetDlgItem(hWnd, 502));
-                    }
-                    else if (args.Request().Reason() == winrt::XamlSourceFocusNavigationReason::Last)
-                    {
-                        // The reason "Last" means the user is tabbing backward (shift-tab, so put the focus on button prior to
-                        // the DesktopWindowXamlSource.
-                        ::SetFocus(::GetDlgItem(hWnd, 501));
-                    }
-                });
+            //windowInfo->TakeFocusRequestedToken = windowInfo->DesktopWindowXamlSource.TakeFocusRequested(
+            //    [hWnd](winrt::DesktopWindowXamlSource const& /*sender*/, winrt::DesktopWindowXamlSourceTakeFocusRequestedEventArgs const& args) {
+            //        if (args.Request().Reason() == winrt::XamlSourceFocusNavigationReason::First)
+            //        {
+            //            // The reason "First" means the user is tabbing forward, so put the focus on the button in the tab order
+            //            // after the DesktopWindowXamlSource.
+            //            ::SetFocus(::GetDlgItem(hWnd, 502));
+            //        }
+            //        else if (args.Request().Reason() == winrt::XamlSourceFocusNavigationReason::Last)
+            //        {
+            //            // The reason "Last" means the user is tabbing backward (shift-tab, so put the focus on button prior to
+            //            // the DesktopWindowXamlSource.
+            //            ::SetFocus(::GetDlgItem(hWnd, 501));
+            //        }
+            //    });
         }
         break;
     case WM_SIZE:
         {
-            const int width = LOWORD(lParam);
+            // const int width = LOWORD(lParam);
             const int height = HIWORD(lParam);
 
             ::SetWindowPos(::GetDlgItem(hWnd, 501), NULL, 10, 10, 150, 40, SWP_NOZORDER);
             ::SetWindowPos(::GetDlgItem(hWnd, 502), NULL, 10, height - 50, 150, 40, SWP_NOZORDER);
 
-            if (windowInfo->DesktopWindowXamlSource)
+            /*if (windowInfo->DesktopWindowXamlSource)
             {
                 windowInfo->DesktopWindowXamlSource.SiteBridge().MoveAndResize({ 10, 60, width - 20, height - 120 });
-            }
+            }*/
         }
         break;
     case WM_ACTIVATE:
@@ -344,11 +351,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
     case WM_NCDESTROY:
-        if (windowInfo->DesktopWindowXamlSource && windowInfo->TakeFocusRequestedToken.value != 0)
+        /*if (windowInfo->DesktopWindowXamlSource && windowInfo->TakeFocusRequestedToken.value != 0)
         {
             windowInfo->DesktopWindowXamlSource.TakeFocusRequested(windowInfo->TakeFocusRequestedToken);
             windowInfo->TakeFocusRequestedToken = {};
-        }
+        }*/
         delete windowInfo;
         ::SetWindowLong(hWnd, GWLP_USERDATA, NULL);
         break;
