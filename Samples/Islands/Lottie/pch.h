@@ -26,6 +26,3 @@
 #include <winrt/Microsoft.UI.Xaml.Hosting.h>
 #include <winrt/Microsoft.UI.Xaml.Markup.h>
 #include <winrt/Windows.Foundation.h>
-
-#include <winrt/LottieVisualWinRT.h>
-//#include <winrt/LottieVisualWinRT.h>

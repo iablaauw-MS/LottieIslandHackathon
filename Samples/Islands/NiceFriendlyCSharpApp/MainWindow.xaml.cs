@@ -22,7 +22,7 @@ using Windows.Foundation.Collections;
 namespace NiceFriendlyCSharpApp
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An example of how Lottie is used at the Composition Layer in C#
     /// </summary>
     public sealed partial class MainWindow : Window
     {
