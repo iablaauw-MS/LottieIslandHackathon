@@ -234,6 +234,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 windowInfo->Compositor,
                 winrt::GetWindowIdFromWindow(hWnd));
 
+            windowInfo->LottieIsland = winrt::LottieIsland::LottieContentIsland{ windowInfo->Compositor };
+
+            windowInfo->Bridge.Connect(windowInfo->LottieIsland.Island());
+            windowInfo->Bridge.Show();
+
             //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
             //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};
             //windowInfo->DesktopWindowXamlSource.Initialize(winrt::GetWindowIdFromWindow(hWnd));
@@ -269,11 +274,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_SIZE:
         {
-            // const int width = LOWORD(lParam);
+            const int width = LOWORD(lParam);
             const int height = HIWORD(lParam);
 
             ::SetWindowPos(::GetDlgItem(hWnd, 501), NULL, 10, 10, 150, 40, SWP_NOZORDER);
             ::SetWindowPos(::GetDlgItem(hWnd, 502), NULL, 10, height - 50, 150, 40, SWP_NOZORDER);
+            if (windowInfo->Bridge)
+            {
+                windowInfo->Bridge.MoveAndResize({ 10, 60, width - 20, height - 120 });
+            }
 
             /*if (windowInfo->DesktopWindowXamlSource)
             {

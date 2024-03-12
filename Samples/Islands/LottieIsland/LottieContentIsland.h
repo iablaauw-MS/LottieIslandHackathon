@@ -17,6 +17,8 @@ namespace winrt::LottieIsland::implementation
         }
 
     private:
+        void InitializeTree();
+
         int32_t m_myProperty = 42;
         winrt::Compositor m_compositor{ nullptr };
         winrt::ContainerVisual m_rootVisual{ nullptr };
