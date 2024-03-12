@@ -6,8 +6,6 @@
 #include "pch.h"
 #include "SimpleIslandApp.h"
 
-#include <App.xaml.h>
-#include <MainPage.h>
 #include <Microsoft.UI.Dispatching.Interop.h> // For ContentPreTranslateMessage
 #include <winrt/LottieIsland.h>
 
