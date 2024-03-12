@@ -14,9 +14,6 @@ namespace winrt
     using namespace winrt::Microsoft::UI;
     using namespace winrt::Microsoft::UI::Content;
     using namespace winrt::Microsoft::UI::Dispatching;
-    using namespace winrt::Microsoft::UI::Xaml;
-    using namespace winrt::Microsoft::UI::Xaml::Hosting;
-    using namespace winrt::Microsoft::UI::Xaml::Markup;
 }
 
 // Forward declarations of functions included in this code module:
