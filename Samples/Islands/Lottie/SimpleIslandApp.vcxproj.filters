@@ -61,4 +61,7 @@
   <ItemGroup>
     <Page Include="MainPage.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="package.appxmanifest" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "NiceFriendlyCSharpApp (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    },
+    "NiceFriendlyCSharpApp (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
