@@ -3,7 +3,10 @@
     [default_interface]
     runtimeclass LottieContentIsland
     {
-        LottieContentIsland();
+        LottieContentIsland(Microsoft.UI.Composition.Compositor compositor);
+
         Int32 MyProperty;
+
+        Microsoft.UI.Content.ContentIsland Island{ get; };
     }
 }
