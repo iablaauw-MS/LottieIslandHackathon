@@ -29,6 +29,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+	<ItemGroup>
+		<Content Include="$(SolutionDir)..\LottieVisualWinRT\bin\$(Platform)\$(Configuration)\net7.0-windows10.0.19041.0\LottieVisualWinRT.dll" CopyToOutputDirectory="PreserveNewest" />
+		<Content Include="$(SolutionDir)..\LottieVisualWinRT\bin\$(Platform)\$(Configuration)\net7.0-windows10.0.19041.0\WinRT.Host.dll" CopyToOutputDirectory="PreserveNewest" />
+		<Content Include="$(SolutionDir)..\LottieVisualWinRT\bin\$(Platform)\$(Configuration)\net7.0-windows10.0.19041.0\WinRT.Runtime.dll" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -283,6 +288,12 @@
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LottieVisualWinRT">
+      <HintPath>..\LottieVisualWinRT\bin\x64\Debug\net7.0-windows10.0.19041.0\LottieVisualWinRT.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
