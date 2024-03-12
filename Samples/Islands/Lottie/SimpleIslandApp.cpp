@@ -9,6 +9,7 @@
 #include <App.xaml.h>
 #include <MainPage.h>
 #include <Microsoft.UI.Dispatching.Interop.h> // For ContentPreTranslateMessage
+#include <winrt/LottieIsland.h>
 
 namespace winrt
 {
@@ -32,6 +33,7 @@ struct WindowInfo
     winrt::DesktopWindowXamlSource DesktopWindowXamlSource{ nullptr };
     winrt::event_token TakeFocusRequestedToken{};
     HWND LastFocusedWindow{ NULL };
+    winrt::LottieIsland::LottieContentIsland LottieIsland{ };
 };
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -292,6 +294,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
+            int wmCode = HIWORD(wParam);
             // Parse the menu selections:
             switch (wmId)
             {
@@ -300,6 +303,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
+                break;
+            case 501: // Button 1
+                if (wmCode == BN_CLICKED)
+                {
+                    auto prop = windowInfo->LottieIsland.MyProperty();
+                    --prop;
+                    windowInfo->LottieIsland.MyProperty(prop);
+                    OutputDebugString(L"Property: ");
+                    OutputDebugString(std::to_wstring(prop).c_str());
+                    OutputDebugString(L"\n");
+                }
+                break;
+            case 502: // Button 2
+                if (wmCode == BN_CLICKED)
+                {
+                    auto prop = windowInfo->LottieIsland.MyProperty();
+                    ++prop;
+                    windowInfo->LottieIsland.MyProperty(prop);
+                    OutputDebugString(L"Property: ");
+                    OutputDebugString(std::to_wstring(prop).c_str());
+                    OutputDebugString(L"\n");
+                }
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);

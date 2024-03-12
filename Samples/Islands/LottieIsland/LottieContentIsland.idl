@@ -1,0 +1,9 @@
+﻿namespace LottieIsland
+{
+    [default_interface]
+    runtimeclass LottieContentIsland
+    {
+        LottieContentIsland();
+        Int32 MyProperty;
+    }
+}
