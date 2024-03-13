@@ -249,16 +249,24 @@
     <ResourceCompile Include="SimpleIslandApp.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\LottieLogo1.png" />
     <Image Include="SimpleIslandApp.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\LottieLogo1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LottieIsland\LottieIsland.vcxproj">
       <Project>{9ba7a2f2-b723-458b-a575-3f726d271465}</Project>
     </ProjectReference>
+    <!-- This Project Reference is needed to pull in LottieVisualWinRT.dll, since VS projects frustratingly do not pull in transitive DLL dependencies.
+      In the wild, this DLL will be included in the LottieIsland nuget package -->
     <ProjectReference Include="..\LottieVisualWinRT\LottieVisualWinRT.csproj">
       <Project>{7cf889af-6b9b-4f9c-815c-990f5f73c9a0}</Project>
     </ProjectReference>

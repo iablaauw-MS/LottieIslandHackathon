@@ -12,6 +12,8 @@ namespace winrt::LottieIsland::implementation
         m_island = winrt::ContentIsland::Create(m_rootVisual);
 
         InitializeTree();
+
+        winrt::LottieVisualWinRT::Class1::SayHello();
     }
 
     int32_t LottieContentIsland::MyProperty()
@@ -58,5 +60,11 @@ namespace winrt::LottieIsland::implementation
 
         // Start animation
         redVisual.StartAnimation(L"Offset", keyFrameAnimation);
+
+        // Set up lottie
+        auto lottieVisual = m_compositor.CreateContainerVisual();
+        m_rootVisual.Children().InsertAtTop(lottieVisual);
+        winrt::LottieVisualWinRT::Class1 class1;
+        class1.SetUpLottie(m_compositor, lottieVisual);
     }
 }

@@ -8,6 +8,7 @@
 #include <winrt/Windows.UI.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/LottieVisualWinRT.h>
 
 namespace winrt
 {
