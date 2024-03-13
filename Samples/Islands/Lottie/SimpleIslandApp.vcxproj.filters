@@ -55,4 +55,7 @@
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest" />
   </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="package.appxmanifest" />
+  </ItemGroup>
 </Project>

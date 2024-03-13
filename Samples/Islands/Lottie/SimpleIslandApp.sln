@@ -7,9 +7,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleIslandApp", "SimpleIs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LottieIsland", "..\LottieIsland\LottieIsland.vcxproj", "{9BA7A2F2-B723-458B-A575-3F726D271465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LottieVisualWinRT", "..\LottieVisualWinRT\LottieVisualWinRT.csproj", "{7CF889AF-6B9B-4F9C-815C-990F5F73C9A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LottieVisualWinRT", "..\LottieVisualWinRT\LottieVisualWinRT.csproj", "{7CF889AF-6B9B-4F9C-815C-990F5F73C9A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceFriendlyCSharpApp", "..\NiceFriendlyCSharpApp\NiceFriendlyCSharpApp.csproj", "{45285555-8894-401D-96BE-C09AFCCD7AE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiceFriendlyCSharpApp", "..\NiceFriendlyCSharpApp\NiceFriendlyCSharpApp.csproj", "{45285555-8894-401D-96BE-C09AFCCD7AE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +31,7 @@ Global
 		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Debug|x64.Build.0 = Debug|x64
 		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Debug|x86.ActiveCfg = Debug|Win32
 		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Debug|x86.Build.0 = Debug|Win32
+		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Debug|x86.Deploy.0 = Debug|Win32
 		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Release|ARM.ActiveCfg = Release|x64
 		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Release|ARM.Build.0 = Release|x64
 		{350A5EC2-B156-4AAF-9D80-A864C76BA0C5}.Release|ARM64.ActiveCfg = Release|ARM64

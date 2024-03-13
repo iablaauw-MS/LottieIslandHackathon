@@ -8,6 +8,7 @@
 
 #include <Microsoft.UI.Dispatching.Interop.h> // For ContentPreTranslateMessage
 #include <winrt/LottieIsland.h>
+#include <winrt/LottieVisualWinRT.h>
 
 namespace winrt
 {
@@ -233,6 +234,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             windowInfo->Bridge.Connect(windowInfo->LottieIsland.Island());
             windowInfo->Bridge.Show();
+
+            winrt::LottieVisualWinRT::Class1::SayHello();
 
             //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
             //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};
