@@ -3,6 +3,7 @@
 #include "pch.h"
 
 #include "MainPage.h"
+#include "winrt/LottieVisualWinRT.h"
 
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;

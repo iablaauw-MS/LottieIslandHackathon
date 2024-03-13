@@ -1,3 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
@@ -5,12 +7,12 @@
   IgnorableNamespaces="uap rescap">
 
 	<Identity
-	  Name="ea703a93-e074-44b5-ac89-db71e4409e2d"
+	  Name="fa703a93-e074-44b5-ac89-db71e4409e2d"
 	  Publisher="CN=Microsoft Corporation"
 	  Version="1.0.0.0" />
 
 	<Properties>
-		<DisplayName>SimpleIslandApp</DisplayName>
+		<DisplayName>CppApp</DisplayName>
 		<PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
 		<Logo>Assets\logo.png</Logo>
 	</Properties>
@@ -41,13 +43,16 @@
 
 	<!--In order to host the C# component from C++, you must add the following Extension group and list the activatable classes-->
 	<Extensions>
-        <Extension Category="windows.activatableClass.inProcessServer">
-            <InProcessServer>
-                <Path>WinRT.Host.dll</Path>
-                <ActivatableClass ActivatableClassId="LottieVisualWinRT.Class1" ThreadingModel="both" />
-            </InProcessServer>
-        </Extension>
-    </Extensions>
+		<Extension Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>WinRT.Host.dll</Path>
+				<ActivatableClass ActivatableClassId="LottieVisualWinRT.Class1" ThreadingModel="both" />
+				<!-- <ActivatableClass ActivatableClassId="WinUIComponentCs.CustomButton" ThreadingModel="both" />
+				<ActivatableClass ActivatableClassId="WinUIComponentCs.NameReporter" ThreadingModel="both" />
+				<ActivatableClass ActivatableClassId="WinUIComponentCs.WinUIComponentCs_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" /> -->
+			</InProcessServer>
+		</Extension>
+	</Extensions>
 
 	<Capabilities>
 		<rescap:Capability Name="runFullTrust" />
