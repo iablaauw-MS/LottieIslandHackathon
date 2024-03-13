@@ -9,6 +9,7 @@
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/LottieVisualWinRT.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
 
 namespace winrt
 {

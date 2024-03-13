@@ -35,25 +35,30 @@ namespace LottieVisualWinRT
         {
             object? diagnostics = null;
             IAnimatedVisual? animatedVisual = sender?.TryCreateAnimatedVisual(_compositor, out diagnostics);
-            _rootVisual?.Children.RemoveAll();
-            _rootVisual?.Children.InsertAtTop(animatedVisual?.RootVisual);
 
-            if (_compositor != null)
+            if (_rootVisual != null)
             {
-                var animation = _compositor.CreateScalarKeyFrameAnimation();
-                if (animatedVisual != null)
+                _rootVisual.Children.RemoveAll();
+                _rootVisual.Children.InsertAtTop(animatedVisual?.RootVisual);
+                Debug.WriteLine("Added Lottie visual to root. beep boop");
+
+                if (_compositor != null)
                 {
-                    animation.Duration = animatedVisual.Duration;
-                    var linearEasing = _compositor.CreateLinearEasingFunction();
+                    var animation = _compositor.CreateScalarKeyFrameAnimation();
+                    if (animatedVisual != null)
+                    {
+                        animation.Duration = animatedVisual.Duration;
+                        var linearEasing = _compositor.CreateLinearEasingFunction();
 
-                    // Play from beginning to end.
-                    animation.InsertKeyFrame(0, 0);
-                    animation.InsertKeyFrame(1, 1, linearEasing);
+                        // Play from beginning to end.
+                        animation.InsertKeyFrame(0, 0);
+                        animation.InsertKeyFrame(1, 1, linearEasing);
 
-                    animation.IterationBehavior = AnimationIterationBehavior.Forever;
+                        animation.IterationBehavior = AnimationIterationBehavior.Forever;
 
-                    // Start the animation and get the controller.
-                    animatedVisual.RootVisual.Properties.StartAnimation("Progress", animation);
+                        // Start the animation and get the controller.
+                        animatedVisual.RootVisual.Properties.StartAnimation("Progress", animation);
+                    }
                 }
             }
         }

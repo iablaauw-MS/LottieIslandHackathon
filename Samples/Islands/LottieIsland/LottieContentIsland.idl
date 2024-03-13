@@ -8,5 +8,7 @@
         Int32 MyProperty;
 
         Microsoft.UI.Content.ContentIsland Island{ get; };
+
+        Microsoft.UI.Xaml.Controls.IAnimatedVisualSource AnimatedVisualSource{ get; set; };
     }
 }

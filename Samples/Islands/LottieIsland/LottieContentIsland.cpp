@@ -26,6 +26,46 @@ namespace winrt::LottieIsland::implementation
         m_myProperty = value;
     }
 
+    winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource LottieContentIsland::AnimatedVisualSource()
+    {
+        // Return the AnimatedVisualSource
+        return m_animatedVisualSource;
+    }
+
+    void LottieContentIsland::AnimatedVisualSource(winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource const& value)
+    {
+        // Set the AnimatedVisualSource
+        m_animatedVisualSource = value;
+        winrt::Windows::Foundation::IInspectable diagnostics;
+        winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisual animatedVisual = m_animatedVisualSource.TryCreateAnimatedVisual(m_compositor, diagnostics);
+
+        // Set up lottie
+        m_rootVisual.Children().InsertAtTop(animatedVisual.RootVisual());
+        auto animation = m_compositor.CreateScalarKeyFrameAnimation();
+        animation.Duration(animatedVisual.Duration());
+        auto linearEasing = m_compositor.CreateLinearEasingFunction();
+        animation.InsertKeyFrame(0, 0);
+        animation.InsertKeyFrame(1, 1, linearEasing);
+        animation.IterationBehavior(winrt::Microsoft::UI::Composition::AnimationIterationBehavior::Forever);
+        animatedVisual.RootVisual().Properties().StartAnimation(L"Progress", animation);
+
+        //var animation = _compositor.CreateScalarKeyFrameAnimation();
+        //if (animatedVisual != null)
+        //{
+        //    animation.Duration = animatedVisual.Duration;
+        //    var linearEasing = _compositor.CreateLinearEasingFunction();
+
+        //    // Play from beginning to end.
+        //    animation.InsertKeyFrame(0, 0);
+        //    animation.InsertKeyFrame(1, 1, linearEasing);
+
+        //    animation.IterationBehavior = AnimationIterationBehavior.Forever;
+
+        //    // Start the animation and get the controller.
+        //    animatedVisual.RootVisual.Properties.StartAnimation("Progress", animation);
+        //}
+    }
+
     void LottieContentIsland::InitializeTree()
     {
         // Make a blue square with a red square inside of it.
@@ -60,11 +100,5 @@ namespace winrt::LottieIsland::implementation
 
         // Start animation
         redVisual.StartAnimation(L"Offset", keyFrameAnimation);
-
-        // Set up lottie
-        auto lottieVisual = m_compositor.CreateContainerVisual();
-        m_rootVisual.Children().InsertAtTop(lottieVisual);
-        winrt::LottieVisualWinRT::Class1 class1;
-        class1.SetUpLottie(m_compositor, lottieVisual);
     }
 }
