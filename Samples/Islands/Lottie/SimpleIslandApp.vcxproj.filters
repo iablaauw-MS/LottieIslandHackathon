@@ -35,9 +35,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpleIslandApp.rc">
@@ -56,10 +53,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="MainPage.xaml" />
+    <AppxManifest Include="package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest" />

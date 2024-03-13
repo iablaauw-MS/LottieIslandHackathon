@@ -7,11 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleIslandApp", "SimpleIs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LottieIsland", "..\LottieIsland\LottieIsland.vcxproj", "{9BA7A2F2-B723-458B-A575-3F726D271465}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LottieVisualWinRT", "..\LottieVisualWinRT\LottieVisualWinRT.csproj", "{7CF889AF-6B9B-4F9C-815C-990F5F73C9A0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiceFriendlyCSharpApp", "..\NiceFriendlyCSharpApp\NiceFriendlyCSharpApp.csproj", "{45285555-8894-401D-96BE-C09AFCCD7AE3}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppApp", "..\CppApp\CppApp.vcxproj", "{34A4AD19-A703-47F3-B279-E505C6A2A935}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LottieVisualWinRT", "..\LottieVisualWinRT\LottieVisualWinRT.csproj", "{7CF889AF-6B9B-4F9C-815C-990F5F73C9A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceFriendlyCSharpApp", "..\NiceFriendlyCSharpApp\NiceFriendlyCSharpApp.csproj", "{45285555-8894-401D-96BE-C09AFCCD7AE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
