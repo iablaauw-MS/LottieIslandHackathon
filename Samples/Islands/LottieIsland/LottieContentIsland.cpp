@@ -12,7 +12,6 @@ namespace winrt::LottieIsland::implementation
         m_island = winrt::ContentIsland::Create(m_rootVisual);
 
         InitializeTree();
-        winrt::LottieVisualWinRT::Class1::SayHello();
     }
 
     int32_t LottieContentIsland::MyProperty()
