@@ -243,8 +243,14 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SimpleIslandApp.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="AnimatedVisuals.LottieLogo1.h">
+      <DependentUpon>AnimatedVisuals.LottieLogo1.idl</DependentUpon>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedVisuals.LottieLogo1.cpp">
+      <DependentUpon>AnimatedVisuals.LottieLogo1.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -252,22 +258,30 @@
     <ClCompile Include="SimpleIslandApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="AnimatedVisuals.LottieLogo1.idl" />
+  </ItemGroup>
+  <ItemGroup>
     <ResourceCompile Include="SimpleIslandApp.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\LottieLogo1.png" />
     <Image Include="SimpleIslandApp.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\LottieLogo1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LottieIsland\LottieIsland.vcxproj">
       <Project>{9ba7a2f2-b723-458b-a575-3f726d271465}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\LottieVisualWinRT\LottieVisualWinRT.csproj">
-      <Project>{7cf889af-6b9b-4f9c-815c-990f5f73c9a0}</Project>
-    </ProjectReference>
+    <!-- This Project Reference is needed to pull in LottieVisualWinRT.dll, since VS projects frustratingly do not pull in transitive DLL dependencies.
+      In the wild, this DLL will be included in the LottieIsland nuget package -->
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">

@@ -24,19 +24,33 @@ namespace winrt::LottieIsland::implementation
         m_myProperty = value;
     }
 
-    winrt::IAnimatedVisualSource LottieContentIsland::AnimationVisualSource() const
+    winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource LottieContentIsland::AnimatedVisualSource() const
     {
-        return m_source;
+        // Return the AnimatedVisualSource
+        return m_animatedVisualSource;
     }
 
-    void LottieContentIsland::AnimationVisualSource(const winrt::IAnimatedVisualSource& source)
+    void LottieContentIsland::AnimatedVisualSource(winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource const& value)
     {
-        m_source = source;
+        // Set the AnimatedVisualSource
+        m_animatedVisualSource = value;
+        winrt::Windows::Foundation::IInspectable diagnostics;
+        winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisual animatedVisual = m_animatedVisualSource.TryCreateAnimatedVisual(m_compositor, diagnostics);
+
+        // Set up lottie
+        m_rootVisual.Children().InsertAtTop(animatedVisual.RootVisual());
+        auto animation = m_compositor.CreateScalarKeyFrameAnimation();
+        animation.Duration(animatedVisual.Duration());
+        auto linearEasing = m_compositor.CreateLinearEasingFunction();
+        animation.InsertKeyFrame(0, 0);
+        animation.InsertKeyFrame(1, 1, linearEasing);
+        animation.IterationBehavior(winrt::Microsoft::UI::Composition::AnimationIterationBehavior::Forever);
+        animatedVisual.RootVisual().Properties().StartAnimation(L"Progress", animation);
     }
 
     winrt::Windows::Foundation::TimeSpan LottieContentIsland::Duration() const
     {
-        if (m_source == nullptr)
+        if (m_animatedVisualSource == nullptr)
         {
             return 0ms;
         }
@@ -46,7 +60,7 @@ namespace winrt::LottieIsland::implementation
 
     bool LottieContentIsland::IsAnimationLoaded() const
     {
-        if (m_source == nullptr)
+        if (m_animatedVisualSource == nullptr)
         {
             return false;
         }
@@ -56,7 +70,7 @@ namespace winrt::LottieIsland::implementation
 
     bool LottieContentIsland::IsPlaying() const
     {
-        if (m_source == nullptr)
+        if (m_animatedVisualSource == nullptr)
         {
             return false;
         }
