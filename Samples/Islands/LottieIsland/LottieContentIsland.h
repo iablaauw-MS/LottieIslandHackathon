@@ -16,6 +16,23 @@ namespace winrt::LottieIsland::implementation
             return m_island;
         }
 
+        winrt::IAnimatedVisualSource AnimationVisualSource() const;
+        void AnimationVisualSource(const IAnimatedVisualSource& source);
+
+        winrt::Windows::Foundation::TimeSpan Duration() const;
+
+        bool IsAnimationLoaded() const;
+
+        bool IsPlaying() const;
+
+        void Pause();
+
+        winrt::Windows::Foundation::IAsyncAction PlayAsync(double fromProgress, double toProgress, bool looped);
+
+        void Resume();
+
+        void Stop();
+
     private:
         void InitializeTree();
 
@@ -23,6 +40,7 @@ namespace winrt::LottieIsland::implementation
         winrt::Compositor m_compositor{ nullptr };
         winrt::ContainerVisual m_rootVisual{ nullptr };
         winrt::ContentIsland m_island{ nullptr };
+        winrt::IAnimatedVisualSource m_source{ nullptr };
     };
 }
 
