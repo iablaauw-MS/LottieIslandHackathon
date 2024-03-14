@@ -24,12 +24,12 @@ namespace winrt::LottieIsland::implementation
         m_myProperty = value;
     }
 
-    winrt::Windows::Foundation::IInspectable LottieContentIsland::AnimationVisualSource() const
+    winrt::IAnimatedVisualSource LottieContentIsland::AnimationVisualSource() const
     {
         return m_source;
     }
 
-    void LottieContentIsland::AnimationVisualSource(const IInspectable& source)
+    void LottieContentIsland::AnimationVisualSource(const winrt::IAnimatedVisualSource& source)
     {
         m_source = source;
     }
@@ -46,11 +46,21 @@ namespace winrt::LottieIsland::implementation
 
     bool LottieContentIsland::IsAnimationLoaded() const
     {
+        if (m_source == nullptr)
+        {
+            return false;
+        }
+
         throw winrt::hresult_not_implemented{};
     }
 
     bool LottieContentIsland::IsPlaying() const
     {
+        if (m_source == nullptr)
+        {
+            return false;
+        }
+
         throw winrt::hresult_not_implemented{};
     }
 

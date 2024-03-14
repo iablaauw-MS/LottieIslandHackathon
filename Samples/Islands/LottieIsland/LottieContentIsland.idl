@@ -10,7 +10,7 @@
         Microsoft.UI.Content.ContentIsland Island{ get; };
 
         // TODO: actually give this the right type
-        IInspectable AnimationVisualSource;
+        Microsoft.UI.Xaml.Controls.IAnimatedVisualSource AnimationVisualSource;
 
         Windows.Foundation.TimeSpan Duration{ get; };
 

@@ -16,8 +16,8 @@ namespace winrt::LottieIsland::implementation
             return m_island;
         }
 
-        IInspectable AnimationVisualSource() const;
-        void AnimationVisualSource(const IInspectable& source);
+        winrt::IAnimatedVisualSource AnimationVisualSource() const;
+        void AnimationVisualSource(const IAnimatedVisualSource& source);
 
         winrt::Windows::Foundation::TimeSpan Duration() const;
 
@@ -40,7 +40,7 @@ namespace winrt::LottieIsland::implementation
         winrt::Compositor m_compositor{ nullptr };
         winrt::ContainerVisual m_rootVisual{ nullptr };
         winrt::ContentIsland m_island{ nullptr };
-        IInspectable m_source{ nullptr }; // TODO: use correct type
+        winrt::IAnimatedVisualSource m_source{ nullptr };
     };
 }
 
