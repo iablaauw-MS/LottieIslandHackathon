@@ -29,11 +29,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <!-- <ItemGroup>
-		<Content Include="$(SolutionDir)..\LottieVisualWinRT\bin\$(Platform)\$(Configuration)\net7.0-windows10.0.19041.0\LottieVisualWinRT.dll" CopyToOutputDirectory="PreserveNewest" />
-		<Content Include="$(SolutionDir)..\LottieVisualWinRT\bin\$(Platform)\$(Configuration)\net7.0-windows10.0.19041.0\WinRT.Host.dll" CopyToOutputDirectory="PreserveNewest" />
-		<Content Include="$(SolutionDir)..\LottieVisualWinRT\bin\$(Platform)\$(Configuration)\net7.0-windows10.0.19041.0\WinRT.Runtime.dll" CopyToOutputDirectory="PreserveNewest" />
-	</ItemGroup> -->
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -281,8 +276,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LottieIsland\LottieIsland.vcxproj">
-      <Project>{9ba7a2f2-b723-458b-a575-3f726d271465}</Project>
+    <ProjectReference Include="..\LottieIsland2\LottieIsland2.csproj">
+      <Project>{d08dfe3d-edd7-4e46-ad56-27542d4aee10}</Project>
     </ProjectReference>
     <!-- This Project Reference is needed to pull in LottieVisualWinRT.dll, since VS projects frustratingly do not pull in transitive DLL dependencies.
       In the wild, this DLL will be included in the LottieIsland nuget package -->
