@@ -24,6 +24,56 @@ namespace winrt::LottieIsland::implementation
         m_myProperty = value;
     }
 
+    winrt::Windows::Foundation::IInspectable LottieContentIsland::AnimationVisualSource() const
+    {
+        return m_source;
+    }
+
+    void LottieContentIsland::AnimationVisualSource(const IInspectable& source)
+    {
+        m_source = source;
+    }
+
+    winrt::Windows::Foundation::TimeSpan LottieContentIsland::Duration() const
+    {
+        if (m_source == nullptr)
+        {
+            return 0ms;
+        }
+
+        throw winrt::hresult_not_implemented{};
+    }
+
+    bool LottieContentIsland::IsAnimationLoaded() const
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    bool LottieContentIsland::IsPlaying() const
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    void LottieContentIsland::Pause()
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    winrt::Windows::Foundation::IAsyncAction LottieContentIsland::PlayAsync(double fromProgress, double toProgress, bool looped)
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    void LottieContentIsland::Resume()
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    void LottieContentIsland::Stop()
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
     void LottieContentIsland::InitializeTree()
     {
         // Make a blue square with a red square inside of it.
