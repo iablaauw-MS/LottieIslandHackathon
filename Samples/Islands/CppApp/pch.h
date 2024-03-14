@@ -29,6 +29,5 @@
 #include <winrt/Microsoft.UI.Xaml.Shapes.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
 #include <winrt/Windows.UI.Core.h>
-//#include <winrt/WinUIComponentCs.h>
-//#include <winrt/WinUIComponentCs.WinUIComponentCs_XamlTypeInfo.h>
-//#include <winrt/LottieVisualWinRT.h>
+
+#include <winrt/LottieVisualWinRT.h>

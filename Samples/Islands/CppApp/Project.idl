@@ -21,11 +21,12 @@ namespace CppApp
      /* The following code is template-specific IDL.
      These runtime classes are the same across all C++/WinRT WinUI samples. */
 
+    [default_interface]
     runtimeclass MainPage : Microsoft.UI.Xaml.Controls.Page
     {
         MainPage();
         static MainPage Current();
-        void NotifyUser(String strMessage, Microsoft.UI.Xaml.Controls.InfoBarSeverity severity);
+        //void NotifyUser(String strMessage, Microsoft.UI.Xaml.Controls.InfoBarSeverity severity);
     }
 
     // To use Scenario in a winrt::Windows::Foundation::Collections::IVector<Scenario>, Scenario should be a WinRT type

@@ -11,6 +11,7 @@ namespace LottieVisualWinRT
     {
         private Compositor? _compositor;
         private ContainerVisual? _rootVisual;
+        private LottieVisualSource? _lottieVisualSource;
 
         public int SampleProperty { get; set; }
 
@@ -19,15 +20,20 @@ namespace LottieVisualWinRT
             Debug.WriteLine("Hello from your C# WinRT component");
         }
 
-        public void SetUpLottie(Compositor compositor, ContainerVisual parent)
+        public void SetUpLottie(Compositor compositor, ContainerVisual parent, String uri)
         {
             _compositor = compositor;
             _rootVisual = parent;
 
-            LottieVisualSource? lottieVisualSource = LottieVisualSource.CreateFromString("ms-appx:///Assets/LottieLogo1.json");
-            if (lottieVisualSource != null)
+            _lottieVisualSource = LottieVisualSource.CreateFromString(uri);
+            if (_lottieVisualSource != null)
             {
-                lottieVisualSource.AnimatedVisualInvalidated += LottieVisualSource_AnimatedVisualInvalidated;
+                _lottieVisualSource.AnimatedVisualInvalidated += LottieVisualSource_AnimatedVisualInvalidated;
+                object? diagnostics = null;
+                if (_lottieVisualSource.TryCreateAnimatedVisual(_compositor, out diagnostics) != null)
+                {
+                    LottieVisualSource_AnimatedVisualInvalidated(_lottieVisualSource, null);
+                }
             }
         }
 

@@ -9,21 +9,5 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <NavigationView x:Name="NavView"
-                         Loaded="NavView_Loaded"
-                         ItemInvoked="NavView_ItemInvoked"
-                         BackRequested="NavView_BackRequested">
-            <NavigationView.MenuItems>
-                <NavigationViewItemHeader x:Name="MainPagesHeader" Content="Scenarios"/>
-            </NavigationView.MenuItems>
-
-            <Grid RowDefinitions="*,Auto">
-                <ScrollViewer>
-                    <Frame Padding="50" x:Name="ContentFrame" Navigated="ContentFrame_Navigated" />
-                </ScrollViewer>
-                <InfoBar x:Name="infoBar" Grid.Row="1" />
-            </Grid>
-        </NavigationView>
-    </Grid>
+    <Grid x:Name="MyGrid"></Grid>
 </Page>

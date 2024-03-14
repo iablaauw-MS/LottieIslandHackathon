@@ -12,6 +12,8 @@
         // TODO: actually give this the right type
         Microsoft.UI.Xaml.Controls.IAnimatedVisualSource AnimatedVisualSource;
 
+        String Uri;
+
         Windows.Foundation.TimeSpan Duration{ get; };
 
         Boolean IsAnimationLoaded{ get; };

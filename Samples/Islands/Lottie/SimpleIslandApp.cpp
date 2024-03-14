@@ -235,7 +235,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             windowInfo->Bridge.Connect(windowInfo->LottieIsland.Island());
             windowInfo->Bridge.Show();
 
+            // C++/WinRT precompiled animation!
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
+
+            // Live JSON loaded animation!
+            //windowInfo->LottieIsland.Uri(L"ms-appx:///LottieLogo1.json");
 
             //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
             //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};
