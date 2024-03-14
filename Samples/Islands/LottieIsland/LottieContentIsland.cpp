@@ -12,8 +12,6 @@ namespace winrt::LottieIsland::implementation
         m_island = winrt::ContentIsland::Create(m_rootVisual);
 
         InitializeTree();
-
-        winrt::LottieVisualWinRT::Class1::SayHello();
     }
 
     int32_t LottieContentIsland::MyProperty()
@@ -26,7 +24,7 @@ namespace winrt::LottieIsland::implementation
         m_myProperty = value;
     }
 
-    winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource LottieContentIsland::AnimatedVisualSource()
+    winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource LottieContentIsland::AnimatedVisualSource() const
     {
         // Return the AnimatedVisualSource
         return m_animatedVisualSource;
@@ -52,7 +50,7 @@ namespace winrt::LottieIsland::implementation
 
     winrt::Windows::Foundation::TimeSpan LottieContentIsland::Duration() const
     {
-        if (m_source == nullptr)
+        if (m_animatedVisualSource == nullptr)
         {
             return 0ms;
         }
@@ -62,7 +60,7 @@ namespace winrt::LottieIsland::implementation
 
     bool LottieContentIsland::IsAnimationLoaded() const
     {
-        if (m_source == nullptr)
+        if (m_animatedVisualSource == nullptr)
         {
             return false;
         }
@@ -72,7 +70,7 @@ namespace winrt::LottieIsland::implementation
 
     bool LottieContentIsland::IsPlaying() const
     {
-        if (m_source == nullptr)
+        if (m_animatedVisualSource == nullptr)
         {
             return false;
         }
