@@ -48,22 +48,56 @@ namespace winrt::LottieIsland::implementation
         animation.InsertKeyFrame(1, 1, linearEasing);
         animation.IterationBehavior(winrt::Microsoft::UI::Composition::AnimationIterationBehavior::Forever);
         animatedVisual.RootVisual().Properties().StartAnimation(L"Progress", animation);
+    }
 
-        //var animation = _compositor.CreateScalarKeyFrameAnimation();
-        //if (animatedVisual != null)
-        //{
-        //    animation.Duration = animatedVisual.Duration;
-        //    var linearEasing = _compositor.CreateLinearEasingFunction();
+    winrt::Windows::Foundation::TimeSpan LottieContentIsland::Duration() const
+    {
+        if (m_source == nullptr)
+        {
+            return 0ms;
+        }
 
-        //    // Play from beginning to end.
-        //    animation.InsertKeyFrame(0, 0);
-        //    animation.InsertKeyFrame(1, 1, linearEasing);
+        throw winrt::hresult_not_implemented{};
+    }
 
-        //    animation.IterationBehavior = AnimationIterationBehavior.Forever;
+    bool LottieContentIsland::IsAnimationLoaded() const
+    {
+        if (m_source == nullptr)
+        {
+            return false;
+        }
 
-        //    // Start the animation and get the controller.
-        //    animatedVisual.RootVisual.Properties.StartAnimation("Progress", animation);
-        //}
+        throw winrt::hresult_not_implemented{};
+    }
+
+    bool LottieContentIsland::IsPlaying() const
+    {
+        if (m_source == nullptr)
+        {
+            return false;
+        }
+
+        throw winrt::hresult_not_implemented{};
+    }
+
+    void LottieContentIsland::Pause()
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    winrt::Windows::Foundation::IAsyncAction LottieContentIsland::PlayAsync(double fromProgress, double toProgress, bool looped)
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    void LottieContentIsland::Resume()
+    {
+        throw winrt::hresult_not_implemented{};
+    }
+
+    void LottieContentIsland::Stop()
+    {
+        throw winrt::hresult_not_implemented{};
     }
 
     void LottieContentIsland::InitializeTree()

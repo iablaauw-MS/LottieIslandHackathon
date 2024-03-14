@@ -9,6 +9,21 @@
 
         Microsoft.UI.Content.ContentIsland Island{ get; };
 
-        Microsoft.UI.Xaml.Controls.IAnimatedVisualSource AnimatedVisualSource{ get; set; };
+        // TODO: actually give this the right type
+        Microsoft.UI.Xaml.Controls.IAnimatedVisualSource AnimationVisualSource;
+
+        Windows.Foundation.TimeSpan Duration{ get; };
+
+        Boolean IsAnimationLoaded{ get; };
+
+        Boolean IsPlaying{ get; };
+
+        void Pause();
+
+        Windows.Foundation.IAsyncAction PlayAsync(Double fromProgress, Double toProgress, Boolean looped);
+
+        void Resume();
+
+        void Stop();
     }
 }

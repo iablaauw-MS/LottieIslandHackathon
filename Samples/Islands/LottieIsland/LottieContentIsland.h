@@ -16,13 +16,27 @@ namespace winrt::LottieIsland::implementation
         int32_t MyProperty();
         void MyProperty(int32_t value);
 
-        winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource AnimatedVisualSource();
-        void AnimatedVisualSource(winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource const& value);
-
         winrt::ContentIsland Island() const
         {
             return m_island;
         }
+
+        winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource AnimationVisualSource() const;
+        void AnimationVisualSource(const winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource& source);
+
+        winrt::Windows::Foundation::TimeSpan Duration() const;
+
+        bool IsAnimationLoaded() const;
+
+        bool IsPlaying() const;
+
+        void Pause();
+
+        winrt::Windows::Foundation::IAsyncAction PlayAsync(double fromProgress, double toProgress, bool looped);
+
+        void Resume();
+
+        void Stop();
 
     private:
         void InitializeTree();
@@ -31,7 +45,7 @@ namespace winrt::LottieIsland::implementation
         winrt::Compositor m_compositor{ nullptr };
         winrt::ContainerVisual m_rootVisual{ nullptr };
         winrt::ContentIsland m_island{ nullptr };
-        winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource m_animatedVisualSource{ nullptr };
+        winrt::IAnimatedVisualSource m_source{ nullptr };
     };
 }
 
