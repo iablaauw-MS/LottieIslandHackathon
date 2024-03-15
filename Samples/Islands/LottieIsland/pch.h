@@ -26,3 +26,5 @@ namespace winrt
 
 // Opt into time literals (i.e. 200ms, 1min, 15s)
 using namespace std::chrono_literals;
+
+using float2 = winrt::Windows::Foundation::Numerics::float2;
