@@ -10,7 +10,7 @@
 #include <winrt/LottieIsland.h>
 //#include <winrt/LottieIsland2.h>
 #include <winrt/AnimatedVisuals.h>
-#include <winrt/LottieVisualWinRT.h>
+//#include <winrt/LottieVisualWinRT.h>
 
 namespace winrt
 {
@@ -241,9 +241,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // C++/WinRT precompiled animation!
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
 
-            // Live JSON loaded animation!
-            winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource animatedVisualSource = winrt::LottieVisualWinRT::Class1::LoadLottie(L"ms-appx:///LottieLogo1.json", windowInfo->Compositor);
-            windowInfo->LottieIsland.AnimatedVisualSource(animatedVisualSource);
+            // Live JSON loaded animation! (this fails beause lottie creates a dependency object)
+            //winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource animatedVisualSource = winrt::LottieVisualWinRT::LottieAnimatedVisualWinRT::LoadLottie(L"ms-appx:///LottieLogo1.json");
+            //windowInfo->LottieIsland.AnimatedVisualSource(animatedVisualSource);
 
             //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
             //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};

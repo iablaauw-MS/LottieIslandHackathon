@@ -26,8 +26,8 @@ namespace NiceFriendlyCSharpApp
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        Compositor _compositor;
-        ContainerVisual _rootVisual;
+        Compositor m_compositor;
+        ContainerVisual m_rootVisual;
 
         public MainWindow()
         {
@@ -37,32 +37,28 @@ namespace NiceFriendlyCSharpApp
 
         private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
         {
-            _compositor = this.Compositor;
-            _rootVisual = _compositor.CreateContainerVisual();
-            ElementCompositionPreview.SetElementChildVisual(VisualHost, _rootVisual);
+            m_compositor = this.Compositor;
+            m_rootVisual = m_compositor.CreateContainerVisual();
+            ElementCompositionPreview.SetElementChildVisual(VisualHost, m_rootVisual);
 
             LottieVisualSource lottieVisualSource = LottieVisualSource.CreateFromString("ms-appx:///Assets/LottieLogo1.json");
-            if (lottieVisualSource != null)
-            {
-                lottieVisualSource.AnimatedVisualInvalidated += LottieVisualSource_AnimatedVisualInvalidated;
-            }
+
+            lottieVisualSource.AnimatedVisualInvalidated += LottieVisualSource_AnimatedVisualInvalidated;
         }
 
-        private void LottieVisualSource_AnimatedVisualInvalidated(IDynamicAnimatedVisualSource? sender, object? args)
+        private void LottieVisualSource_AnimatedVisualInvalidated(IDynamicAnimatedVisualSource sender, object args)
         {
-            Compositor compositor = this.Compositor;
-
             object? diagnostics = null;
-            IAnimatedVisual? animatedVisual = sender?.TryCreateAnimatedVisual(_compositor, out diagnostics);
-            _rootVisual?.Children.RemoveAll();
+            IAnimatedVisual? animatedVisual = sender?.TryCreateAnimatedVisual(m_compositor, out diagnostics);
+            m_rootVisual?.Children.RemoveAll();
 
-            _rootVisual?.Children.InsertAtTop(animatedVisual?.RootVisual);
+            m_rootVisual?.Children.InsertAtTop(animatedVisual?.RootVisual);
 
-            var animation = compositor.CreateScalarKeyFrameAnimation();
+            var animation = m_compositor.CreateScalarKeyFrameAnimation();
             if (animatedVisual != null)
             {
                 animation.Duration = animatedVisual.Duration;
-                var linearEasing = compositor.CreateLinearEasingFunction();
+                var linearEasing = m_compositor.CreateLinearEasingFunction();
 
                 // Play from beginning to end.
                 animation.InsertKeyFrame(0, 0);

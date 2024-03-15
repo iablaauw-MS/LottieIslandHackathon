@@ -46,7 +46,7 @@
 		<Extension Category="windows.activatableClass.inProcessServer">
 			<InProcessServer>
 				<Path>WinRT.Host.dll</Path>
-				<ActivatableClass ActivatableClassId="LottieVisualWinRT.Class1" ThreadingModel="both" />
+				<ActivatableClass ActivatableClassId="LottieVisualWinRT.LottieVisualSourceWinRT" ThreadingModel="both" />
 				<!-- <ActivatableClass ActivatableClassId="WinUIComponentCs.CustomButton" ThreadingModel="both" />
 				<ActivatableClass ActivatableClassId="WinUIComponentCs.NameReporter" ThreadingModel="both" />
 				<ActivatableClass ActivatableClassId="WinUIComponentCs.WinUIComponentCs_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" /> -->

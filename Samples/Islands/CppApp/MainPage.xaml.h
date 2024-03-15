@@ -17,7 +17,6 @@ namespace winrt::CppApp::implementation
         static CppApp::MainPage current;
         winrt::Microsoft::UI::Composition::Compositor m_compositor{ nullptr };
         winrt::Microsoft::UI::Composition::ContainerVisual m_rootVisual{ nullptr };
-        winrt::LottieVisualWinRT::Class1 m_class1{ nullptr };
     };
 }
 

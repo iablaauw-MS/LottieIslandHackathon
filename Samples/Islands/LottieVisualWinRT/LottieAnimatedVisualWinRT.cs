@@ -7,23 +7,30 @@ using System.Diagnostics;
 namespace LottieVisualWinRT
 {
     // Dummy WinRT object that we are trying to reference from a C++ project
-    public sealed class Class1
+    public sealed class LottieAnimatedVisualWinRT
     {
-        private Compositor? _compositor;
-        private ContainerVisual? _rootVisual;
-        private LottieVisualSource? _lottieVisualSource;
+        private LottieVisualSource? m_lottieVisualSource;
 
-        public int SampleProperty { get; set; }
+        // C# Events exported to WinRT... don't work??? I get a Win32Exception when generating the code???
+        //public event EventHandler? AnimatedVisualInvalidated;
 
-        public static void SayHello()
-        {
-            Debug.WriteLine("Hello from your C# WinRT component");
-        }
+        //public void LoadLottie(string uri)
+        //{
+        //    m_lottieVisualSource = LottieVisualSource.CreateFromString(uri);
+        //    if (m_lottieVisualSource != null)
+        //    {
+        //        m_lottieVisualSource.AnimatedVisualInvalidated += Source_AnimatedVisualInvalidated;
+        //    }
+        //}
 
-        public static IAnimatedVisualSource? LoadLottie(string uri, Compositor compositor)
-        {
-            return LottieVisualSource.CreateFromString(uri);
-        }
+        //private void Source_AnimatedVisualInvalidated(IDynamicAnimatedVisualSource? sender, object? args)
+        //{
+        //    AnimatedVisualInvalidated?.Invoke(this, EventArgs.Empty);
+        //}
+
+        Compositor? _compositor;
+        ContainerVisual? _rootVisual;
+        LottieVisualSource? _lottieVisualSource;
 
         public void SetUpLottie(Compositor compositor, ContainerVisual parent, String uri)
         {
@@ -61,14 +68,14 @@ namespace LottieVisualWinRT
                         animation.Duration = animatedVisual.Duration;
                         var linearEasing = _compositor.CreateLinearEasingFunction();
 
-                        // Play from beginning to end.
-                        animation.InsertKeyFrame(0, 0);
-                        animation.InsertKeyFrame(1, 1, linearEasing);
+                       // Play from beginning to end.
+                       animation.InsertKeyFrame(0, 0);
+                       animation.InsertKeyFrame(1, 1, linearEasing);
 
-                        animation.IterationBehavior = AnimationIterationBehavior.Forever;
+                       animation.IterationBehavior = AnimationIterationBehavior.Forever;
 
-                        // Start the animation and get the controller.
-                        animatedVisual.RootVisual.Properties.StartAnimation("Progress", animation);
+                       // Start the animation and get the controller.
+                       animatedVisual.RootVisual.Properties.StartAnimation("Progress", animation);
                     }
                 }
             }
