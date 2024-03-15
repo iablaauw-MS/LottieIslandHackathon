@@ -7,9 +7,10 @@
 #include "SimpleIslandApp.h"
 
 #include <Microsoft.UI.Dispatching.Interop.h> // For ContentPreTranslateMessage
-//#include <winrt/LottieIsland.h>
-#include <winrt/LottieIsland2.h>
+#include <winrt/LottieIsland.h>
+//#include <winrt/LottieIsland2.h>
 #include <winrt/AnimatedVisuals.h>
+#include <winrt/LottieVisualWinRT.h>
 
 namespace winrt
 {
@@ -33,7 +34,7 @@ struct WindowInfo
     winrt::DesktopChildSiteBridge Bridge{ nullptr };
     winrt::event_token TakeFocusRequestedToken{};
     HWND LastFocusedWindow{ NULL };
-    winrt::LottieIsland2::LottieContentIsland2 LottieIsland{ nullptr };
+    winrt::LottieIsland::LottieContentIsland LottieIsland{ nullptr };
 };
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -232,7 +233,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 winrt::GetWindowIdFromWindow(hWnd));
 
             //windowInfo->LottieIsland = winrt::LottieIsland::LottieContentIsland{ windowInfo->Compositor };
-            windowInfo->LottieIsland = winrt::LottieIsland2::LottieContentIsland2{ windowInfo->Compositor };
+            windowInfo->LottieIsland = winrt::LottieIsland::LottieContentIsland{ windowInfo->Compositor };
 
             windowInfo->Bridge.Connect(windowInfo->LottieIsland.Island());
             windowInfo->Bridge.Show();
@@ -241,7 +242,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
 
             // Live JSON loaded animation!
-            windowInfo->LottieIsland.Uri(L"ms-appx:///LottieLogo1.json");
+            winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource animatedVisualSource = winrt::LottieVisualWinRT::Class1::LoadLottie(L"ms-appx:///LottieLogo1.json", windowInfo->Compositor);
+            windowInfo->LottieIsland.AnimatedVisualSource(animatedVisualSource);
 
             //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
             //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};

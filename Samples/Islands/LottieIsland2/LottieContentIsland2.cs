@@ -34,24 +34,6 @@ namespace LottieIsland2
             }
         }
 
-        public string? Uri
-        {
-            get => m_uri;
-            set
-            {
-                m_uri = value;
-                if (m_uri != null)
-                {
-                    //// THIS LINE causes the SimpleIslandApp to crash
-                    //var lottieVisualSource = LottieVisualSource.CreateFromString(m_uri);
-                    //if (lottieVisualSource != null)
-                    //{
-                    //    lottieVisualSource.AnimatedVisualInvalidated += LottieVisualSource_AnimatedVisualInvalidated;
-                    //}
-                }
-            }
-        }
-
         TimeSpan Duration { get; }
 
         bool IsAnimationLoaded { get; }

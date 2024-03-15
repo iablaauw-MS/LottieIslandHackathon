@@ -48,28 +48,6 @@ namespace winrt::LottieIsland::implementation
         animatedVisual.RootVisual().Properties().StartAnimation(L"Progress", animation);
     }
 
-    winrt::hstring LottieContentIsland::Uri() const
-    {
-        return m_uri;
-    }
-
-    void LottieContentIsland::Uri(const winrt::hstring uri)
-    {
-        LottieVisualWinRT::Class1::SayHello();
-
-        m_class1 = LottieVisualWinRT::Class1();
-        if (m_class1 != nullptr)
-        {
-            OutputDebugString(L"Meep\n");
-        }
-
-        // Create a second root visual to show both animations at once!
-        ContainerVisual secondRootVisual = m_compositor.CreateContainerVisual();
-        secondRootVisual.Offset(winrt::Windows::Foundation::Numerics::float3(300, 0, 0));
-        m_rootVisual.Children().InsertAtTop(secondRootVisual);
-        m_class1.SetUpLottie(m_compositor, secondRootVisual, uri);
-    }
-
     winrt::Windows::Foundation::TimeSpan LottieContentIsland::Duration() const
     {
         if (m_animatedVisualSource == nullptr)

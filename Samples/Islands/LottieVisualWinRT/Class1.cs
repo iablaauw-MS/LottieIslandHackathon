@@ -20,6 +20,11 @@ namespace LottieVisualWinRT
             Debug.WriteLine("Hello from your C# WinRT component");
         }
 
+        public static IAnimatedVisualSource? LoadLottie(string uri, Compositor compositor)
+        {
+            return LottieVisualSource.CreateFromString(uri);
+        }
+
         public void SetUpLottie(Compositor compositor, ContainerVisual parent, String uri)
         {
             _compositor = compositor;

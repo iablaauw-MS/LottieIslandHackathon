@@ -24,9 +24,6 @@ namespace winrt::LottieIsland::implementation
         winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource AnimatedVisualSource() const;
         void AnimatedVisualSource(const winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource& source);
 
-        winrt::hstring Uri() const;
-        void Uri(const winrt::hstring uri);
-
         winrt::Windows::Foundation::TimeSpan Duration() const;
 
         bool IsAnimationLoaded() const;
