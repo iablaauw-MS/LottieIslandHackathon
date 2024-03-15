@@ -39,13 +39,22 @@ namespace winrt::LottieIsland::implementation
         void Stop();
 
     private:
-        void InitializeTree();
+        void StartAnimation(double fromProgress, double toProgress, bool loop);
+        void StopAnimation();
+
+        void OnIslandStateChanged(const winrt::ContentIsland& island, const winrt::ContentIslandStateChangedEventArgs& args);
+
+        void Resize(const float2& size);
 
         int32_t m_myProperty = 42;
         winrt::Compositor m_compositor{ nullptr };
         winrt::ContainerVisual m_rootVisual{ nullptr };
         winrt::ContentIsland m_island{ nullptr };
         winrt::IAnimatedVisualSource m_animatedVisualSource{ nullptr };
+        winrt::IAnimatedVisual m_animatedVisual{ nullptr };
+        winrt::CompositionPropertySet m_progressPropertySet{ nullptr };
+        winrt::AnimationController m_animationController{ nullptr };
+        double m_previousFromProgress = 0.0;
     };
 }
 
