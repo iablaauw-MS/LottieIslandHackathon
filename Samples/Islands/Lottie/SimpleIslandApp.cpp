@@ -43,7 +43,8 @@ enum class ButtonType
 {
     PlayButton = 1,
     PauseButton,
-    StopButton
+    StopButton,
+    ReverseButton
 };
 
 constexpr int k_padding = 10;
@@ -264,6 +265,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
             CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
             CreateWin32Button(ButtonType::StopButton, L"Stop", hWnd);
+            CreateWin32Button(ButtonType::ReverseButton, L"Reverse", hWnd);
 
             // Subscribe to the TakeFocusRequested event, which will be raised when Xaml wants to move keyboard focus back to our window.
             //windowInfo->TakeFocusRequestedToken = windowInfo->DesktopWindowXamlSource.TakeFocusRequested(
@@ -296,6 +298,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             LayoutButton(ButtonType::PlayButton, width, height, hWnd);
             LayoutButton(ButtonType::PauseButton, width, height, hWnd);
             LayoutButton(ButtonType::StopButton, width, height, hWnd);
+            LayoutButton(ButtonType::ReverseButton, width, height, hWnd);
         }
         break;
     case WM_ACTIVATE:
@@ -331,6 +334,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case 501: // Buttons
             case 502:
             case 503:
+            case 504:
                 if (wmCode == BN_CLICKED)
                 {
                     ButtonType type = static_cast<ButtonType>(wmId - 500);
@@ -441,6 +445,16 @@ void OnButtonClicked(ButtonType type, WindowInfo* windowInfo, HWND topLevelWindo
     case ButtonType::StopButton:
         windowInfo->LottieIsland.Stop();
         SetPauseState(windowInfo, false, topLevelWindow);
+        break;
+    case ButtonType::ReverseButton:
+        if (windowInfo->LottieIsland.PlaybackRate() == 1.0)
+        {
+            windowInfo->LottieIsland.PlaybackRate(-1.0);
+        }
+        else
+        {
+            windowInfo->LottieIsland.PlaybackRate(1.0);
+        }
         break;
     default:
         throw winrt::hresult_invalid_argument{ L"Invalid button type." };
