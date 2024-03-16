@@ -52,7 +52,9 @@ constexpr int k_buttonHeight = 40;
 
 void LayoutButton(ButtonType type, int tlwWidth, int tlwHeight, HWND topLevelWindow);
 void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND parentHwnd);
-void OnButtonClicked(ButtonType type, WindowInfo* windowInfo);
+void OnButtonClicked(ButtonType type, WindowInfo* windowInfo, HWND topLevelWindow);
+void SetButtonText(ButtonType type, const std::wstring_view& text, HWND topLevelWindow);
+void SetPauseState(WindowInfo* windowInfo, bool isPaused, HWND topLevelWindow);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -332,7 +334,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (wmCode == BN_CLICKED)
                 {
                     ButtonType type = static_cast<ButtonType>(wmId - 500);
-                    OnButtonClicked(type, windowInfo);
+                    OnButtonClicked(type, windowInfo, hWnd);
                 }
                 break;
             default:
@@ -417,30 +419,51 @@ void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND pare
         NULL);
 }
 
-void OnButtonClicked(ButtonType type, WindowInfo* windowInfo)
+void OnButtonClicked(ButtonType type, WindowInfo* windowInfo, HWND topLevelWindow)
 {
     switch (type)
     {
     case ButtonType::PlayButton:
+        windowInfo->LottieIsland.PlayAsync(0.0, 1.0, true);
+        SetPauseState(windowInfo, false, topLevelWindow);
+        break;
+    case ButtonType::PauseButton:
         if (windowInfo->isPaused)
         {
             windowInfo->LottieIsland.Resume();
         }
         else
         {
-            windowInfo->LottieIsland.PlayAsync(0.0, 1.0, true);
+            windowInfo->LottieIsland.Pause();
         }
-        windowInfo->isPaused = false;
-        break;
-    case ButtonType::PauseButton:
-        windowInfo->LottieIsland.Pause();
-        windowInfo->isPaused = true;
+        SetPauseState(windowInfo, !windowInfo->isPaused, topLevelWindow);
         break;
     case ButtonType::StopButton:
         windowInfo->LottieIsland.Stop();
-        windowInfo->isPaused = false;
+        SetPauseState(windowInfo, false, topLevelWindow);
         break;
     default:
         throw winrt::hresult_invalid_argument{ L"Invalid button type." };
     }
+}
+
+void SetButtonText(ButtonType type, const std::wstring_view& text, HWND topLevelWindow)
+{
+    int buttonIndex = static_cast<int>(type);
+    HWND buttonHwnd = ::GetDlgItem(topLevelWindow, 500 + buttonIndex);
+    ::SendMessageW(buttonHwnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(text.data()));
+}
+
+void SetPauseState(WindowInfo* windowInfo, bool isPaused, HWND topLevelWindow)
+{
+    if (windowInfo->isPaused == isPaused)
+    {
+        return;
+    }
+
+    SetButtonText(ButtonType::PauseButton,
+        isPaused ? L"Resume" : L"Pause",
+        topLevelWindow);
+
+    windowInfo->isPaused = isPaused;
 }

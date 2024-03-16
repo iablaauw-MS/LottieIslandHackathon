@@ -110,7 +110,7 @@ namespace winrt::LottieIsland::implementation
     {
         if (m_animationController != nullptr)
         {
-            m_animationController.Pause();
+            m_animationController.Resume();
         }
     }
 
