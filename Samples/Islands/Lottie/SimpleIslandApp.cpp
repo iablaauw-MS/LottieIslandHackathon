@@ -17,6 +17,7 @@ namespace winrt
     using namespace winrt::Microsoft::UI;
     using namespace winrt::Microsoft::UI::Content;
     using namespace winrt::Microsoft::UI::Dispatching;
+    using float2 = winrt::Windows::Foundation::Numerics::float2;
 }
 
 // Forward declarations of functions included in this code module:
@@ -36,6 +37,21 @@ struct WindowInfo
     HWND LastFocusedWindow{ NULL };
     winrt::LottieIsland::LottieContentIsland LottieIsland{ nullptr };
 };
+
+enum class ButtonType
+{
+    PlayButton = 1,
+    PauseButton,
+    StopButton
+};
+
+constexpr int k_padding = 10;
+constexpr int k_buttonWidth = 150;
+constexpr int k_buttonHeight = 40;
+
+void LayoutButton(ButtonType type, int tlwWidth, int tlwHeight, HWND topLevelWindow);
+void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND parentHwnd);
+void OnButtonClicked(ButtonType type, const WindowInfo& windowInfo);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -225,9 +241,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             windowInfo = new WindowInfo();
             ::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(windowInfo));
 
-            const HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
-            ::CreateWindow(L"BUTTON", L"Win32 Button 1", WS_TABSTOP | WS_VISIBLE | WS_CHILD, 10, 10, 150, 40, hWnd, (HMENU)501, hInst, NULL);
-
             windowInfo->Bridge = winrt::DesktopChildSiteBridge::Create(
                 windowInfo->Compositor,
                 winrt::GetWindowIdFromWindow(hWnd));
@@ -245,20 +258,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource animatedVisualSource = winrt::LottieVisualWinRT::LottieAnimatedVisualWinRT::LoadLottie(L"ms-appx:///LottieLogo1.json");
             //windowInfo->LottieIsland.AnimatedVisualSource(animatedVisualSource);
 
-            //// Create our DesktopWindowXamlSource and attach it to our hwnd.  This is our "island".
-            //windowInfo->DesktopWindowXamlSource = winrt::DesktopWindowXamlSource{};
-            //windowInfo->DesktopWindowXamlSource.Initialize(winrt::GetWindowIdFromWindow(hWnd));
-
-            //// Enable the DesktopWindowXamlSource to be a tab stop.
-            //::SetWindowLong(
-            //    winrt::GetWindowFromWindowId(windowInfo->DesktopWindowXamlSource.SiteBridge().WindowId()),
-            //    GWL_STYLE,
-            //    WS_TABSTOP | WS_CHILD | WS_VISIBLE);
-
-            //// Put a new instance of our Xaml "MainPage" into our island.  This is our UI content.
-            //windowInfo->DesktopWindowXamlSource.Content(winrt::make<winrt::SimpleIslandApp::implementation::MainPage>());
-
-            ::CreateWindow(L"BUTTON", L"Win32 Button 2", WS_TABSTOP | WS_VISIBLE | WS_CHILD, 10, 400, 150, 40, hWnd, (HMENU)502, hInst, NULL);
+            CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
+            CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
 
             // Subscribe to the TakeFocusRequested event, which will be raised when Xaml wants to move keyboard focus back to our window.
             //windowInfo->TakeFocusRequestedToken = windowInfo->DesktopWindowXamlSource.TakeFocusRequested(
@@ -283,17 +284,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             const int width = LOWORD(lParam);
             const int height = HIWORD(lParam);
 
-            ::SetWindowPos(::GetDlgItem(hWnd, 501), NULL, 10, 10, 150, 40, SWP_NOZORDER);
-            ::SetWindowPos(::GetDlgItem(hWnd, 502), NULL, 10, height - 50, 150, 40, SWP_NOZORDER);
             if (windowInfo->Bridge)
             {
-                windowInfo->Bridge.MoveAndResize({ 10, 60, width - 20, height - 120 });
+                windowInfo->Bridge.MoveAndResize({ k_padding, k_padding, width - (k_padding*2), height - (k_padding*3) - k_buttonHeight });
             }
 
-            /*if (windowInfo->DesktopWindowXamlSource)
-            {
-                windowInfo->DesktopWindowXamlSource.SiteBridge().MoveAndResize({ 10, 60, width - 20, height - 120 });
-            }*/
+            LayoutButton(ButtonType::PlayButton, width, height, hWnd);
+            LayoutButton(ButtonType::PauseButton, width, height, hWnd);
         }
         break;
     case WM_ACTIVATE:
@@ -326,26 +323,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
-            case 501: // Button 1
+            case 501: // Buttons
+            case 502:
                 if (wmCode == BN_CLICKED)
                 {
-                    auto prop = windowInfo->LottieIsland.MyProperty();
-                    --prop;
-                    windowInfo->LottieIsland.MyProperty(prop);
-                    OutputDebugString(L"Property: ");
-                    OutputDebugString(std::to_wstring(prop).c_str());
-                    OutputDebugString(L"\n");
-                }
-                break;
-            case 502: // Button 2
-                if (wmCode == BN_CLICKED)
-                {
-                    auto prop = windowInfo->LottieIsland.MyProperty();
-                    ++prop;
-                    windowInfo->LottieIsland.MyProperty(prop);
-                    OutputDebugString(L"Property: ");
-                    OutputDebugString(std::to_wstring(prop).c_str());
-                    OutputDebugString(L"\n");
+                    ButtonType type = static_cast<ButtonType>(wmId - 500);
+                    OnButtonClicked(type, *windowInfo);
                 }
                 break;
             default:
@@ -398,4 +381,58 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+void LayoutButton(ButtonType type, int /*tlwWidth*/, int tlwHeight, HWND topLevelWindow)
+{
+    int buttonIndex = static_cast<int>(type);
+
+    int xPos = ((buttonIndex - 1) * (k_buttonWidth + k_padding)) + k_padding;
+    int yPos = tlwHeight - k_buttonHeight - k_padding;
+
+    HWND buttonHwnd = ::GetDlgItem(topLevelWindow, 500 + buttonIndex);
+    ::SetWindowPos(buttonHwnd, NULL, xPos, yPos, k_buttonWidth, k_buttonHeight, SWP_NOZORDER);
+}
+
+void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND parentHwnd)
+{
+    int buttonIndex = static_cast<int>(type);
+
+    int xPos = ((buttonIndex - 1) * (k_buttonWidth + k_padding)) + k_padding;
+
+    const HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(parentHwnd, GWLP_HINSTANCE);
+    HMENU fakeHMenu = reinterpret_cast<HMENU>(static_cast<intptr_t>(500 + buttonIndex));
+    ::CreateWindowW(
+        L"BUTTON",
+        text.data(),
+        WS_TABSTOP | WS_VISIBLE | WS_CHILD,
+        xPos, 250, k_buttonWidth, k_buttonHeight,
+        parentHwnd,
+        fakeHMenu,
+        hInst,
+        NULL);
+}
+
+void OnButtonClicked(ButtonType type, const WindowInfo& windowInfo)
+{
+
+    auto prop = windowInfo.LottieIsland.MyProperty();
+
+    switch (type)
+    {
+    case ButtonType::PlayButton:
+        --prop;
+        break;
+    case ButtonType::PauseButton:
+        ++prop;
+        break;
+    case ButtonType::StopButton:
+    default:
+        break;
+    }
+
+    windowInfo.LottieIsland.MyProperty(prop);
+    OutputDebugString(L"Property: ");
+    OutputDebugString(std::to_wstring(prop).c_str());
+    OutputDebugString(L"\n");
 }
