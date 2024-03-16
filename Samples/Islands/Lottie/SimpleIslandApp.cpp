@@ -36,6 +36,7 @@ struct WindowInfo
     winrt::event_token TakeFocusRequestedToken{};
     HWND LastFocusedWindow{ NULL };
     winrt::LottieIsland::LottieContentIsland LottieIsland{ nullptr };
+    bool isPaused = false;
 };
 
 enum class ButtonType
@@ -51,7 +52,7 @@ constexpr int k_buttonHeight = 40;
 
 void LayoutButton(ButtonType type, int tlwWidth, int tlwHeight, HWND topLevelWindow);
 void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND parentHwnd);
-void OnButtonClicked(ButtonType type, const WindowInfo& windowInfo);
+void OnButtonClicked(ButtonType type, WindowInfo* windowInfo);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -260,6 +261,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
             CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
+            CreateWin32Button(ButtonType::StopButton, L"Stop", hWnd);
 
             // Subscribe to the TakeFocusRequested event, which will be raised when Xaml wants to move keyboard focus back to our window.
             //windowInfo->TakeFocusRequestedToken = windowInfo->DesktopWindowXamlSource.TakeFocusRequested(
@@ -291,6 +293,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             LayoutButton(ButtonType::PlayButton, width, height, hWnd);
             LayoutButton(ButtonType::PauseButton, width, height, hWnd);
+            LayoutButton(ButtonType::StopButton, width, height, hWnd);
         }
         break;
     case WM_ACTIVATE:
@@ -325,10 +328,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case 501: // Buttons
             case 502:
+            case 503:
                 if (wmCode == BN_CLICKED)
                 {
                     ButtonType type = static_cast<ButtonType>(wmId - 500);
-                    OnButtonClicked(type, *windowInfo);
+                    OnButtonClicked(type, windowInfo);
                 }
                 break;
             default:
@@ -413,26 +417,30 @@ void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND pare
         NULL);
 }
 
-void OnButtonClicked(ButtonType type, const WindowInfo& windowInfo)
+void OnButtonClicked(ButtonType type, WindowInfo* windowInfo)
 {
-
-    auto prop = windowInfo.LottieIsland.MyProperty();
-
     switch (type)
     {
     case ButtonType::PlayButton:
-        --prop;
+        if (windowInfo->isPaused)
+        {
+            windowInfo->LottieIsland.Resume();
+        }
+        else
+        {
+            windowInfo->LottieIsland.PlayAsync(0.0, 1.0, true);
+        }
+        windowInfo->isPaused = false;
         break;
     case ButtonType::PauseButton:
-        ++prop;
+        windowInfo->LottieIsland.Pause();
+        windowInfo->isPaused = true;
         break;
     case ButtonType::StopButton:
-    default:
+        windowInfo->LottieIsland.Stop();
+        windowInfo->isPaused = false;
         break;
+    default:
+        throw winrt::hresult_invalid_argument{ L"Invalid button type." };
     }
-
-    windowInfo.LottieIsland.MyProperty(prop);
-    OutputDebugString(L"Property: ");
-    OutputDebugString(std::to_wstring(prop).c_str());
-    OutputDebugString(L"\n");
 }
