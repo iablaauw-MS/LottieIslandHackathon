@@ -14,16 +14,6 @@ namespace winrt::LottieIsland::implementation
         m_island.StateChanged({ get_weak(), &LottieContentIsland::OnIslandStateChanged });
     }
 
-    int32_t LottieContentIsland::MyProperty()
-    {
-        return m_myProperty;
-    }
-
-    void LottieContentIsland::MyProperty(int32_t value)
-    {
-        m_myProperty = value;
-    }
-
     winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource LottieContentIsland::AnimatedVisualSource() const
     {
         // Return the AnimatedVisualSource
@@ -87,6 +77,20 @@ namespace winrt::LottieIsland::implementation
         return m_progressPropertySet != nullptr;
     }
 
+    double LottieContentIsland::PlaybackRate() const
+    {
+        return m_playbackRate;
+    }
+
+    void LottieContentIsland::PlaybackRate(double rate)
+    {
+        m_playbackRate = rate;
+        if (m_animationController != nullptr)
+        {
+            m_animationController.PlaybackRate(m_playbackRate);
+        }
+    }
+
     void LottieContentIsland::Pause()
     {
         if (m_animationController != nullptr)
@@ -110,7 +114,7 @@ namespace winrt::LottieIsland::implementation
     {
         if (m_animationController != nullptr)
         {
-            m_animationController.Pause();
+            m_animationController.Resume();
         }
     }
 
@@ -144,6 +148,7 @@ namespace winrt::LottieIsland::implementation
         m_progressPropertySet = m_animatedVisual.RootVisual().Properties();
         m_progressPropertySet.StartAnimation(L"Progress", animation);
         m_animationController = m_progressPropertySet.TryGetAnimationController(L"Progress");
+        m_animationController.PlaybackRate(m_playbackRate);
         m_previousFromProgress = fromProgress;
     }
 
