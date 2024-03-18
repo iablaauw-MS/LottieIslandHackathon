@@ -10,7 +10,7 @@
 	  Version="1.0.0.0" />
 
 	<Properties>
-		<DisplayName>SimpleIslandApp</DisplayName>
+		<DisplayName>SimpleLottieIslandApp</DisplayName>
 		<PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
 		<Logo>Assets\logo.png</Logo>
 	</Properties>

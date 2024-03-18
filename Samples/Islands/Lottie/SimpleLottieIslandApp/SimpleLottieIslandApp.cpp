@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// SimpleIslandApp.cpp : Defines the entry point for the application.
+// SimpleLottieIslandApp.cpp : Defines the entry point for the application.
 
 #include "pch.h"
-#include "SimpleIslandApp.h"
+#include "SimpleLottieIslandApp.h"
 
 #include <Microsoft.UI.Dispatching.Interop.h> // For ContentPreTranslateMessage
 #include <winrt/LottieIsland.h>
-//#include <winrt/LottieIsland2.h>
 #include <winrt/AnimatedVisuals.h>
-//#include <winrt/LottieVisualWinRT.h>
 
 namespace winrt
 {
@@ -75,7 +73,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
         // in Microsoft.ui.xaml.controls.dll.
-        // auto simpleIslandApp{ winrt::make<winrt::SimpleIslandApp::implementation::App>() };
+        // auto SimpleLottieIslandApp{ winrt::make<winrt::SimpleLottieIslandApp::implementation::App>() };
 
         // The title bar text
         WCHAR szTitle[100];
@@ -83,14 +81,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         // The main window class name
         WCHAR szWindowClass[100];
-        winrt::check_bool(LoadStringW(hInstance, IDC_SIMPLEISLANDAPP, szWindowClass, ARRAYSIZE(szWindowClass)) != 0);
+        winrt::check_bool(LoadStringW(hInstance, IDC_SIMPLELOTTIEISLANDAPP, szWindowClass, ARRAYSIZE(szWindowClass)) != 0);
 
         MyRegisterClass(hInstance, szWindowClass);
 
         // Perform application initialization:
         HWND topLevelWindow = InitInstance(hInstance, nCmdShow, szTitle, szWindowClass);
 
-        HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_SIMPLEISLANDAPP));
+        HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_SIMPLELOTTIEISLANDAPP));
 
         MSG msg{};
 
@@ -193,10 +191,10 @@ void MyRegisterClass(HINSTANCE hInstance, const wchar_t* szWindowClass)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_SIMPLEISLANDAPP));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_SIMPLELOTTIEISLANDAPP));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_SIMPLEISLANDAPP);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_SIMPLELOTTIEISLANDAPP);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 

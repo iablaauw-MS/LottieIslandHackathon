@@ -1,0 +1,15 @@
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace SimpleLottieIslandApp
+{
+    /* Dummy IDL to generate a dummy WinMD for the AppX project */
+
+    [default_interface]
+    runtimeclass MainPage
+    {
+        MainPage();
+        static MainPage Current();
+    }
+
+}
