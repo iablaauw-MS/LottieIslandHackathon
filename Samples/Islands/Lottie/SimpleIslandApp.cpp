@@ -258,10 +258,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // C++/WinRT precompiled animation!
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
 
-            // Live JSON loaded animation! (this fails beause lottie creates a dependency object)
-            //winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource animatedVisualSource = winrt::LottieVisualWinRT::LottieAnimatedVisualWinRT::LoadLottie(L"ms-appx:///LottieLogo1.json");
-            //windowInfo->LottieIsland.AnimatedVisualSource(animatedVisualSource);
-
             CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
             CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
             CreateWin32Button(ButtonType::StopButton, L"Stop", hWnd);
