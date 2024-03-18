@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <!-- Set Platform to AnyCPU to allow consumption of the projection assembly from any architecture. -->
+    <Platform>AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CsWinRTIncludes>LottieIsland</CsWinRTIncludes>
+    <CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GeneratedNugetDir>.\nuget\</GeneratedNugetDir>
+    <NuspecFile>$(GeneratedNugetDir)LottieIsland.nuspec</NuspecFile>
+    <OutputPath>$(GeneratedNugetDir)</OutputPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+</PropertyGroup>
+</Project>

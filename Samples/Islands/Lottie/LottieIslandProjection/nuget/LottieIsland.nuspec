@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>LottieIsland</id>
+		<version>0.1.0-prerelease</version>
+		<authors>Microsoft</authors>
+		<owners>microsoft</owners>
+		<description>A ContentIsland that hosts a Lottie animation</description>
+        <projectUrl>https://github.com/microsoft/WindowsAppSDK-Samples</projectUrl>
+		<icon>images\icon.png</icon>
+		<readme>docs\readme.md</readme>
+		<dependencies>
+			<group>
+				<dependency id="Microsoft.WindowsAppSDK" version="1.5.240227000" />
+			</group>
+			<group targetFramework="net6.0-windows10.0.19041.0" />
+			<group targetFramework=".NETCoreApp3.0" />
+			<group targetFramework="UAP10.0" />
+			<group targetFramework=".NETFramework4.6" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file target="images\icon.png" src="icon.png" />
+		<file target="docs\readme.md" src="readme.md" />
+
+		<!--Support .NET 6, .NET Core 3, UAP, .NET Framework 4.6, C++ -->
+		<!--Architecture-netural assemblies-->
+		<file src="..\..\_build\AnyCPU\Release\LottieIslandProjection\bin\LottieIslandProjection.dll" target="lib\net6.0-windows10.0.19041.0\LottieIslandProjection.dll" />
+		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\netcoreapp3.0\LottieIsland.winmd" />
+		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\uap10.0\LottieIsland.winmd" />
+		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\net46\LottieIsland.winmd" />
+
+		<!--Architecture-specific implementation DLLs should be copied into RID-relative folders-->
+		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-x64\native\LottieIsland.dll" />
+		<file src="..\..\_build\Win32\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-x86\native\LottieIsland.dll" />
+		<file src="..\..\_build\arm64\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-arm64\native\LottieIsland.dll" />
+	</files>
+</package>
