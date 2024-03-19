@@ -25,14 +25,14 @@
 
 		<!--Support .NET 6, .NET Core 3, UAP, .NET Framework 4.6, C++ -->
 		<!--Architecture-netural assemblies-->
-		<file src="..\..\_build\AnyCPU\Release\LottieIslandProjection\bin\LottieIslandProjection.dll" target="lib\net6.0-windows10.0.19041.0\LottieIslandProjection.dll" />
-		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\netcoreapp3.0\LottieIsland.winmd" />
-		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\uap10.0\LottieIsland.winmd" />
-		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\net46\LottieIsland.winmd" />
+		<file src="..\_build\AnyCPU\Release\LottieIslandProjection\bin\LottieIslandProjection.dll" target="lib\net6.0-windows10.0.19041.0\LottieIslandProjection.dll" />
+		<file src="..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\netcoreapp3.0\LottieIsland.winmd" />
+		<file src="..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\uap10.0\LottieIsland.winmd" />
+		<file src="..\_build\x64\Release\LottieIsland\bin\LottieIsland.winmd" target="lib\net46\LottieIsland.winmd" />
 
 		<!--Architecture-specific implementation DLLs should be copied into RID-relative folders-->
-		<file src="..\..\_build\x64\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-x64\native\LottieIsland.dll" />
-		<file src="..\..\_build\Win32\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-x86\native\LottieIsland.dll" />
-		<file src="..\..\_build\arm64\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-arm64\native\LottieIsland.dll" />
+		<file src="..\_build\x64\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-x64\native\LottieIsland.dll" />
+		<file src="..\_build\Win32\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-x86\native\LottieIsland.dll" />
+		<file src="..\_build\arm64\Release\LottieIsland\bin\LottieIsland.dll" target="runtimes\win10-arm64\native\LottieIsland.dll" />
 	</files>
 </package>

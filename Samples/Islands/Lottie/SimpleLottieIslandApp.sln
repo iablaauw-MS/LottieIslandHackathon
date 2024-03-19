@@ -7,11 +7,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleLottieIslandApp", "Si
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LottieIsland", "LottieIsland\LottieIsland.vcxproj", "{9BA7A2F2-B723-458B-A575-3F726D271465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LottieIslandProjection", "LottieIslandProjection\LottieIslandProjection.csproj", "{6C9016E3-D60D-402F-92A0-0A635713E53F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LottieIslandProjection", "LottieIslandProjection\LottieIslandProjection.csproj", "{6C9016E3-D60D-402F-92A0-0A635713E53F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89F69758-0DAF-4593-954E-668EAE5710A5}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		nuget\LottieIsland.nuspec = nuget\LottieIsland.nuspec
 	EndProjectSection
 EndProject
 Global
