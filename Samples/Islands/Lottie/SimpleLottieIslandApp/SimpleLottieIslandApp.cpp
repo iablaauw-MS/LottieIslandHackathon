@@ -188,18 +188,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             windowInfo = new WindowInfo();
             ::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(windowInfo));
 
+            // Create the DesktopChildSiteBridge
             windowInfo->Bridge = winrt::DesktopChildSiteBridge::Create(
                 windowInfo->Compositor,
                 winrt::GetWindowIdFromWindow(hWnd));
 
+            // Create the LottieIsland, which is a WinRT wrapper for hosting a Lottie animation in a ContentIsland
             windowInfo->LottieIsland = winrt::LottieIsland::LottieContentIsland{ windowInfo->Compositor };
 
+            // Connect the ContentIsland to the DesktopChildSiteBridge
             windowInfo->Bridge.Connect(windowInfo->LottieIsland.Island());
             windowInfo->Bridge.Show();
 
-            // C++/WinRT precompiled animation!
+            // Set the C++/WinRT precompiled Lottie animation!
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
 
+            // Add some Win32 controls to allow the app to play with the animation
             CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
             CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
             CreateWin32Button(ButtonType::StopButton, L"Stop", hWnd);
