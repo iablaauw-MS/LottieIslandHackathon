@@ -42,9 +42,8 @@
 	<Extensions>
         <Extension Category="windows.activatableClass.inProcessServer">
             <InProcessServer>
-                <Path>WinRT.Host.dll</Path>
-                <ActivatableClass ActivatableClassId="LottieVisualWinRT.Class1" ThreadingModel="both" />
-				<!--<ActivatableClass ActivatableClassId="LottieIsland2.LottieContentIsland2" ThreadingModel="both" />-->
+                <Path>LottieIsland.dll</Path>
+                <ActivatableClass ActivatableClassId="LottieIsland.LottieContentIsland" ThreadingModel="both" />
             </InProcessServer>
         </Extension>
     </Extensions>
