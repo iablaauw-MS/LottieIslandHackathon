@@ -2,31 +2,24 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <win2d-Platform Condition="'$(Platform)' == 'Win32'">x86</win2d-Platform>
-    <win2d-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</win2d-Platform>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- This is a workaround for a WinAppSDK VSIX bug (MSFT:40265852) that causes not apps to not properly generate ActivatableClass entries on incremental build -->
-    <AppxWinMdCacheEnabled>false</AppxWinMdCacheEnabled>
+    <lottieisland-Platform Condition="'$(Platform)' == 'Win32'">x86</lottieisland-Platform>
+    <lottieisland-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</lottieisland-Platform>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\LottieIsland.winmd">
       <Implementation>LottieIsland.dll</Implementation>
     </Reference>
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-$(win2d-Platform)\native\LottieIsland.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-$(lottieisland-Platform)\native\LottieIsland.dll" />
   </ItemGroup>
 
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory)..\..\Include;
-        $(MSBuildThisFileDirectory)..\..\Include\$(win2d-Platform);
+        $(MSBuildThisFileDirectory)..\..\Include\$(lottieisland-Platform);
         %(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
-
-  <!-- <Import Project="$(MSBuildThisFileDirectory)..\Win2D.common.targets" /> -->
 
 </Project>
