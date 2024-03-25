@@ -27,19 +27,19 @@ namespace winrt::LottieIsland::implementation
 
         bool IsPlaying() const;
 
-        double PlaybackRate() const;
-        void PlaybackRate(double rate);
+        float PlaybackRate() const;
+        void PlaybackRate(float rate);
 
         void Pause();
 
-        winrt::Windows::Foundation::IAsyncAction PlayAsync(double fromProgress, double toProgress, bool looped);
+        winrt::Windows::Foundation::IAsyncAction PlayAsync(float fromProgress, float toProgress, bool looped);
 
         void Resume();
 
         void Stop();
 
     private:
-        void StartAnimation(double fromProgress, double toProgress, bool loop);
+        void StartAnimation(float fromProgress, float toProgress, bool loop);
         void StopAnimation();
 
         void OnIslandStateChanged(const winrt::ContentIsland& island, const winrt::ContentIslandStateChangedEventArgs& args);
@@ -53,8 +53,8 @@ namespace winrt::LottieIsland::implementation
         winrt::IAnimatedVisual m_animatedVisual{ nullptr };
         winrt::CompositionPropertySet m_progressPropertySet{ nullptr };
         winrt::AnimationController m_animationController{ nullptr };
-        double m_previousFromProgress = 0.0;
-        double m_playbackRate = 1.0f;
+        float m_previousFromProgress = 0.0;
+        float m_playbackRate = 1.0f;
     };
 }
 

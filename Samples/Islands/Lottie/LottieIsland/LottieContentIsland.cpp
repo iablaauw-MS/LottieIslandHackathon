@@ -77,12 +77,12 @@ namespace winrt::LottieIsland::implementation
         return m_progressPropertySet != nullptr;
     }
 
-    double LottieContentIsland::PlaybackRate() const
+    float LottieContentIsland::PlaybackRate() const
     {
         return m_playbackRate;
     }
 
-    void LottieContentIsland::PlaybackRate(double rate)
+    void LottieContentIsland::PlaybackRate(float rate)
     {
         m_playbackRate = rate;
         if (m_animationController != nullptr)
@@ -99,7 +99,7 @@ namespace winrt::LottieIsland::implementation
         }
     }
 
-    winrt::Windows::Foundation::IAsyncAction LottieContentIsland::PlayAsync(double fromProgress, double toProgress, bool looped)
+    winrt::Windows::Foundation::IAsyncAction LottieContentIsland::PlayAsync(float fromProgress, float toProgress, bool looped)
     {
         // Stop any existing animation
         StopAnimation();
@@ -123,7 +123,7 @@ namespace winrt::LottieIsland::implementation
         StopAnimation();
     }
 
-    void LottieContentIsland::StartAnimation(double fromProgress, double toProgress, bool loop)
+    void LottieContentIsland::StartAnimation(float fromProgress, float toProgress, bool loop)
     {
         if (m_animatedVisual == nullptr)
         {

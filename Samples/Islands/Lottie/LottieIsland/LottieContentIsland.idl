@@ -15,11 +15,11 @@
 
         Boolean IsPlaying{ get; };
 
-        Double PlaybackRate;
+        Single PlaybackRate;
 
         void Pause();
 
-        Windows.Foundation.IAsyncAction PlayAsync(Double fromProgress, Double toProgress, Boolean looped);
+        Windows.Foundation.IAsyncAction PlayAsync(Single fromProgress, Single toProgress, Boolean looped);
 
         void Resume();
 
