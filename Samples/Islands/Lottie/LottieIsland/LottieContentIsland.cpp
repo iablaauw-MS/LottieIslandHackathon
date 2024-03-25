@@ -135,7 +135,7 @@ namespace winrt::LottieIsland::implementation
         if (!looped)
         {
             // Hook up an event handler to the Completed event of the batch
-            auto eventToken = batch.Completed([&](auto&&, auto&&)
+            batch.Completed([&](auto&&, auto&&)
                 {
                     // Set the completion event when the batch completes
                     SetEvent(m_animationCompletionEvent.get());
@@ -160,10 +160,6 @@ namespace winrt::LottieIsland::implementation
     void LottieContentIsland::Stop()
     {
         StopAnimation();
-        if (m_looped)
-        {
-            SetEvent(m_animationCompletionEvent.get());
-        }
     }
 
     void LottieContentIsland::StartAnimation(float fromProgress, float toProgress, bool loop)
@@ -206,6 +202,11 @@ namespace winrt::LottieIsland::implementation
         // Stop and snap to the beginning of the animation
         m_progressPropertySet.StopAnimation(L"Progress");
         m_progressPropertySet.InsertScalar(L"Progress", m_previousFromProgress);
+
+        if (m_looped)
+        {
+            SetEvent(m_animationCompletionEvent.get());
+        }
 
         // Cleanup
         m_previousFromProgress = 0.0;

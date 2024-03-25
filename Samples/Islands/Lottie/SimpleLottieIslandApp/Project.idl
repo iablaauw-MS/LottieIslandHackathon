@@ -3,13 +3,13 @@
 
 namespace SimpleLottieIslandApp
 {
-    /* Dummy IDL to generate a dummy WinMD for the AppX project */
+    /* IDL to generate a placeholder WinMD for the AppX project */
 
     [default_interface]
-    runtimeclass MainPage
+    runtimeclass Placeholder
     {
-        MainPage();
-        static MainPage Current();
+        Placeholder();
+        static Placeholder DoNothing();
     }
 
 }

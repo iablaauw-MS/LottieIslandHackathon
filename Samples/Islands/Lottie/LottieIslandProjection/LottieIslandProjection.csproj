@@ -10,7 +10,7 @@
     <CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
     <GeneratedNugetDir>..\nuget\</GeneratedNugetDir>
     <NuspecFile>$(GeneratedNugetDir)LottieIsland.nuspec</NuspecFile>
-		<SupportedPlatforms>x64;Win32;ARM64</SupportedPlatforms>
+    <SupportedPlatforms>x64;Win32;ARM64</SupportedPlatforms>
     <OutputPath>$(GeneratedNugetDir)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
@@ -20,14 +20,9 @@
 
   <!-- Define the platforms you want to build ProjectA for -->
   <PropertyGroup>
-		<CSWinRTIncludes>
-			Microsoft.Graphics.Canvas;
-		</CSWinRTIncludes>
+    <CSWinRTIncludes>
+      Microsoft.Graphics.Canvas;
+    </CSWinRTIncludes>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
-
-  <!-- Define a custom target to build ProjectA for each platform -->
-  <!-- <Target Name="BuildProjectA" BeforeTargets="Build">
-    <MSBuild Projects="..\LottieIsland\LottieIsland.vcxproj" Properties="Configuration=$(Configuration);Platform=%(SupportedPlatforms.Identity)" Targets="Build" />
-  </Target> -->
 </Project>
