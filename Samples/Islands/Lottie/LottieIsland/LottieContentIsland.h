@@ -55,6 +55,8 @@ namespace winrt::LottieIsland::implementation
         winrt::AnimationController m_animationController{ nullptr };
         float m_previousFromProgress = 0.0;
         float m_playbackRate = 1.0f;
+        winrt::handle m_animationCompletionEvent{ nullptr };
+        bool m_looped;
     };
 }
 
