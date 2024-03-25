@@ -13,6 +13,9 @@ namespace winrt::LottieIsland::implementation
 
         m_island.StateChanged({ get_weak(), &LottieContentIsland::OnIslandStateChanged });
 
+        // Once it's not experimental, we should use InputPointerSource::GetForVisual on our root visual.
+        // This will give us automatic hittesting for whatever content and shape the Lottie animation has.
+        // Currently hittesting will just be a rectangle the size of the island, regardless of content.
         m_inputPointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(m_island);
 
         InitializeInputHandlers();
