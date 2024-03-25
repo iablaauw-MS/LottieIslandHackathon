@@ -101,13 +101,38 @@ namespace winrt::LottieIsland::implementation
 
     winrt::Windows::Foundation::IAsyncAction LottieContentIsland::PlayAsync(float fromProgress, float toProgress, bool looped)
     {
+        if (m_animationCompletionEvent.get() == nullptr)
+        {
+            m_animationCompletionEvent = winrt::handle(CreateEvent(nullptr, false, false, nullptr));
+        }
+
         // Stop any existing animation
         StopAnimation();
 
-        // TODO: actually implement the async portion of this properly using composition batches.
+        auto batch = m_compositor.CreateScopedBatch(CompositionBatchTypes::Animation);
 
         StartAnimation(fromProgress, toProgress, looped);
-        co_return;
+
+        // Keep track of whether the animation is looped, since we will have to
+        // manually fire the event if Stop() is called in the non-looped case.
+        // We don't hook up the event here in the looped case, because ScopedBatches
+        // complete immediately if their animation is looped.
+        m_looped = looped;
+        if (!looped)
+        {
+            // Hook up an event handler to the Completed event of the batch
+            auto eventToken = batch.Completed([&](auto&&, auto&&)
+                {
+                    // Set the completion event when the batch completes
+                    SetEvent(m_animationCompletionEvent.get());
+                });
+        }
+
+        // Commit the batch
+        batch.End();
+
+        // Wait for the completion event asynchronously
+        co_await winrt::resume_on_signal(m_animationCompletionEvent.get()); // Wait for the event to be signaled
     }
 
     void LottieContentIsland::Resume()
@@ -121,6 +146,10 @@ namespace winrt::LottieIsland::implementation
     void LottieContentIsland::Stop()
     {
         StopAnimation();
+        if (m_looped)
+        {
+            SetEvent(m_animationCompletionEvent.get());
+        }
     }
 
     void LottieContentIsland::StartAnimation(float fromProgress, float toProgress, bool loop)

@@ -345,10 +345,25 @@ void CreateWin32Button(ButtonType type, const std::wstring_view& text, HWND pare
 
 void OnButtonClicked(ButtonType type, WindowInfo* windowInfo, HWND topLevelWindow)
 {
+    winrt::Windows::Foundation::IAsyncAction asyncAction{ nullptr };
     switch (type)
     {
     case ButtonType::PlayButton:
-        windowInfo->LottieIsland.PlayAsync(0.0, 1.0, true);
+        asyncAction = windowInfo->LottieIsland.PlayAsync(0.0, 1.0, true);
+        asyncAction.Completed([](auto&&, auto&& asyncStatus)
+            {
+                // Check if the async operation was successfully completed
+                if (asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed)
+                {
+                    OutputDebugString(L"Async operation completed successfully.\n");
+                }
+                else
+                {
+                    OutputDebugString(L"Async operation failed or was canceled.\n");
+                }
+            });
+
+
         SetPauseState(windowInfo, false, topLevelWindow);
         break;
     case ButtonType::PauseButton:
