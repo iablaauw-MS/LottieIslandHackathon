@@ -13,12 +13,14 @@
 #include <winrt/Windows.UI.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 
 namespace winrt
 {
     using namespace ::winrt::Microsoft::UI::Composition;
     using namespace ::winrt::Microsoft::UI::Content;
+    using namespace ::winrt::Microsoft::UI::Input;
 
     using IAnimatedVisualSource = ::winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource;
     using IAnimatedVisual = ::winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisual;

@@ -15,6 +15,16 @@
 
         Boolean IsPlaying{ get; };
 
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerEntered;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerExited;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerMoved;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerPressed;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerReleased;
+
         Single PlaybackRate;
 
         void Pause();

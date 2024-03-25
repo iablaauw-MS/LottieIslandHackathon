@@ -12,6 +12,17 @@ namespace winrt::LottieIsland::implementation
         m_island = winrt::ContentIsland::Create(m_rootVisual);
 
         m_island.StateChanged({ get_weak(), &LottieContentIsland::OnIslandStateChanged });
+
+        m_inputPointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(m_island);
+
+        InitializeInputHandlers();
+    }
+
+    LottieContentIsland::~LottieContentIsland()
+    {
+        // Dispose (Close) our island. This will revoke any event handlers from it or sub-objects, which
+        // is why the LottieContentIsland doesn't need to manually revoke event handlers.
+        m_island.Close();
     }
 
     winrt::Microsoft::UI::Xaml::Controls::IAnimatedVisualSource LottieContentIsland::AnimatedVisualSource() const
@@ -205,5 +216,28 @@ namespace winrt::LottieIsland::implementation
             m_rootVisual.Size(desiredSize);
             m_rootVisual.Scale({ scale.x, scale.y, 1.f });
         }
+    }
+
+    void LottieContentIsland::InitializeInputHandlers()
+    {
+        m_inputPointerSource.PointerEntered([this](auto& /*sender*/, auto& args) {
+            m_pointerEnteredEvent(*this, args);
+        });
+
+        m_inputPointerSource.PointerExited([this](auto& /*sender*/, auto& args) {
+            m_pointerExitedEvent(*this, args);
+        });
+
+        m_inputPointerSource.PointerMoved([this](auto& /*sender*/, auto& args) {
+            m_pointerMovedEvent(*this, args);
+        });
+
+        m_inputPointerSource.PointerPressed([this](auto& /*sender*/, auto& args) {
+            m_pointerPressedEvent(*this, args);
+        });
+
+        m_inputPointerSource.PointerReleased([this](auto& /*sender*/, auto& args) {
+            m_pointerReleasedEvent(*this, args);
+        });
     }
 }

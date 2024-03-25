@@ -203,6 +203,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Set the C++/WinRT precompiled Lottie animation!
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
 
+
+            windowInfo->LottieIsland.PointerPressed([=](auto&...) {
+                // Clicking on the Lottie animation acts like clicking "Pause/Resume"
+                OnButtonClicked(ButtonType::PauseButton, windowInfo, hWnd);
+            });
+
             // Add some Win32 controls to allow the app to play with the animation
             CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
             CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
