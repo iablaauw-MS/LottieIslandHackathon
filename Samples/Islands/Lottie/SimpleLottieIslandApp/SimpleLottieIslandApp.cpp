@@ -203,6 +203,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Set the C++/WinRT precompiled Lottie animation!
             windowInfo->LottieIsland.AnimatedVisualSource(winrt::AnimatedVisuals::LottieLogo1());
 
+
+            windowInfo->LottieIsland.PointerPressed([=](auto&...) {
+                // Clicking on the Lottie animation acts like clicking "Pause/Resume"
+                OnButtonClicked(ButtonType::PauseButton, windowInfo, hWnd);
+            });
+
             // Add some Win32 controls to allow the app to play with the animation
             CreateWin32Button(ButtonType::PlayButton, L"Play", hWnd);
             CreateWin32Button(ButtonType::PauseButton, L"Pause", hWnd);
@@ -217,7 +223,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             if (windowInfo->Bridge)
             {
-                windowInfo->Bridge.MoveAndResize({ k_padding, k_padding, width - (k_padding*2), height - (k_padding*3) - k_buttonHeight });
+                // Layout our bridge: we want to use all available height (minus a button and some padding),
+                // but respect the ratio that the LottieIsland wants to display at. This can be accessed through
+                // the "RequestedSize" property on the ContentSiteView.
+
+                int availableHeight = height - (k_padding * 3) - k_buttonHeight;
+                int availableWidth = width - (k_padding * 2);
+
+                // Check what size the lottie wants to be
+                winrt::float2 requestedSize = windowInfo->Bridge.SiteView().RequestedSize();
+
+                // Scale the width to be the ratio the lottie wants
+                int bridgeWidth = 0;
+                if (requestedSize.y > 0) // Guard against divide-by-zero
+                {
+                    bridgeWidth = static_cast<int>((requestedSize.x / requestedSize.y) * availableHeight);
+                }
+
+                // ... but don't overflow the width we have available
+                bridgeWidth = std::min(availableWidth, bridgeWidth);
+
+                windowInfo->Bridge.MoveAndResize({ k_padding, k_padding, bridgeWidth, availableHeight });
             }
 
             LayoutButton(ButtonType::PlayButton, width, height, hWnd);
