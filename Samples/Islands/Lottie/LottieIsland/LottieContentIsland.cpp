@@ -4,6 +4,11 @@
 
 namespace winrt::LottieIsland::implementation
 {
+    winrt::LottieContentIsland LottieContentIsland::Create(const winrt::Compositor& compositor)
+    {
+        return winrt::make<LottieContentIsland>(compositor);
+    }
+
     LottieContentIsland::LottieContentIsland(
         const winrt::Compositor& compositor)
         : m_compositor(compositor)

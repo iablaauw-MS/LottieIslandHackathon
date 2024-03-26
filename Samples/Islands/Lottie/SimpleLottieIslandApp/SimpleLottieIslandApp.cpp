@@ -194,7 +194,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 winrt::GetWindowIdFromWindow(hWnd));
 
             // Create the LottieIsland, which is a WinRT wrapper for hosting a Lottie animation in a ContentIsland
-            windowInfo->LottieIsland = winrt::LottieIsland::LottieContentIsland{ windowInfo->Compositor };
+            windowInfo->LottieIsland = winrt::LottieIsland::LottieContentIsland::Create(windowInfo->Compositor);
 
             // Connect the ContentIsland to the DesktopChildSiteBridge
             windowInfo->Bridge.Connect(windowInfo->LottieIsland.Island());

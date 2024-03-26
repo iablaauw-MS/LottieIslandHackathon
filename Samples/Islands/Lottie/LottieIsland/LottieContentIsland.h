@@ -7,11 +7,18 @@ namespace winrt::Microsoft::UI::Xaml::Controls
     interface IAnimatedVisualSource;
 }
 
+namespace winrt
+{
+    using namespace ::winrt::LottieIsland;
+}
+
 namespace winrt::LottieIsland::implementation
 {
     struct LottieContentIsland : LottieContentIslandT<LottieContentIsland>
     {
         using PointerEventHandler = Windows::Foundation::TypedEventHandler<winrt::LottieIsland::LottieContentIsland, winrt::PointerEventArgs>;
+
+        static winrt::LottieContentIsland Create(const winrt::Compositor& compositor);
 
         LottieContentIsland(const winrt::Compositor& compositor);
         ~LottieContentIsland();

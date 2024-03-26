@@ -1,9 +1,8 @@
 ﻿namespace LottieIsland
 {
-    [default_interface]
     runtimeclass LottieContentIsland
     {
-        LottieContentIsland(Microsoft.UI.Composition.Compositor compositor);
+        static LottieContentIsland Create(Microsoft.UI.Composition.Compositor compositor);
 
         Microsoft.UI.Content.ContentIsland Island{ get; };
 
