@@ -1,0 +1,39 @@
+﻿namespace LottieIsland
+{
+    runtimeclass LottieContentIsland
+    {
+        static LottieContentIsland Create(Microsoft.UI.Composition.Compositor compositor);
+
+        Microsoft.UI.Content.ContentIsland Island{ get; };
+
+        Microsoft.UI.Xaml.Controls.IAnimatedVisualSource AnimatedVisualSource;
+
+        Windows.Foundation.TimeSpan Duration{ get; };
+
+        Boolean IsAnimationLoaded{ get; };
+
+        Boolean IsPlaying{ get; };
+
+        Single PlaybackRate;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerEntered;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerExited;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerMoved;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerPressed;
+
+        event Windows.Foundation.TypedEventHandler<LottieContentIsland, Microsoft.UI.Input.PointerEventArgs> PointerReleased;
+
+        void Pause();
+
+        Windows.Foundation.IAsyncAction PlayAsync(Single fromProgress, Single toProgress, Boolean looped);
+
+        void Resume();
+
+        void Stop();
+
+
+    }
+}
